@@ -1412,7 +1412,7 @@ void DS_CmdAddMID(const CFE_SB_Buffer_t *BufPtr)
 
         pPacketEntry->MessageID = DS_AddMidCmd->MessageID;
 
-        /* Add the message ID to the hash table as well */
+        /* Add the MID to the hash table as well */
         HashTableIndex = DS_TableAddMsgID(DS_AddMidCmd->MessageID, FilterTableIndex);
 
         for (i = 0; i < DS_FILTERS_PER_PACKET; i++)
