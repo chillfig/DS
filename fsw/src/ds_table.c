@@ -420,6 +420,7 @@ CFE_Status_t DS_TableVerifyDestFile(const void *TableData)
         else
         {
             CountBad++;
+            /* SAD: Assignment of 0xFFFFFFFF to Result is safe; it represents -1 in int32, within valid range */
             Result = DS_TABLE_VERIFY_ERR;
         }
     }
@@ -542,6 +543,7 @@ CFE_Status_t DS_TableVerifyFilter(const void *TableData)
         else
         {
             CountBad++;
+            /* SAD: Assignment of 0xFFFFFFFF to Result is safe; it represents -1 in int32, within valid range */
             Result = DS_TABLE_VERIFY_ERR;
         }
     }
