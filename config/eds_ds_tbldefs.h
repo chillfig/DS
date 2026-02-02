@@ -34,5 +34,4 @@
 #define DS_BY_TIME  DS_FilterType_BY_TIME  /**< \brief Action is based on packet timestamp */
 #define DS_BY_COUNT DS_FilterType_BY_COUNT /**< \brief Action is based on packet sequence count */
 
-
 #endif

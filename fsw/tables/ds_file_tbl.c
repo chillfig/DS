@@ -71,7 +71,7 @@ DS_DestFileTable_t DS_DestFileTable = {
     /* .Descriptor = */ "Sample File Table Data",
     /* .File       = */
     {
-        /* File Index 00 -- event packets only */
+     /* File Index 00 -- event packets only */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -83,8 +83,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 32), /* 32 K-bytes */
             /* .MaxFileAge    = */ (60 * 45),   /* 45 minutes */
             /* .SequenceCount = */ 1000,
-        },
-        /* File Index 01 -- application housekeeping packets */
+        }, /* File Index 01 -- application housekeeping packets */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -96,8 +95,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 1024 * 2), /* 2 M-bytes */
             /* .MaxFileAge    = */ (60 * 60 * 2),     /* 2 hours */
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 02 -- application telemetry packets */
+        }, /* File Index 02 -- application telemetry packets */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -109,8 +107,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 1024 * 1024 * 1), /* 1 G-byte */
             /* .MaxFileAge    = */ (60 * 60 * 2),            /* 2 hours */
             /* .SequenceCount = */ 2000,
-        },
-        /* File Index 03 -- hardware telemetry packets */
+        }, /* File Index 03 -- hardware telemetry packets */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -122,8 +119,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 1024 * 2), /* 2 M-bytes */
             /* .MaxFileAge    = */ (60 * 60 * 2),     /* 2 hours */
             /* .SequenceCount = */ 3000,
-        },
-        /* File Index 04 -- cFE housekeeping packets */
+        }, /* File Index 04 -- cFE housekeeping packets */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -135,8 +131,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 1024 * 2), /* 2 M-bytes */
             /* .MaxFileAge    = */ (60 * 60 * 2),     /* 2 hours */
             /* .SequenceCount = */ 4000,
-        },
-        /* File Index 05 -- cFE telemetry packets */
+        }, /* File Index 05 -- cFE telemetry packets */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ "set_by_cmd_b4_enable",
@@ -148,8 +143,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ (1024 * 1024 * 2), /* 2 M-bytes */
             /* .MaxFileAge    = */ (60 * 60 * 2),     /* 2 hours */
             /* .SequenceCount = */ 5000,
-        },
-        /* File Index 06 */
+        }, /* File Index 06 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -161,8 +155,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 07 */
+        }, /* File Index 07 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -174,8 +167,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 08 */
+        }, /* File Index 08 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -187,8 +179,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 09 */
+        }, /* File Index 09 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -200,8 +191,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 10 */
+        }, /* File Index 10 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -213,8 +203,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 11 */
+        }, /* File Index 11 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -226,8 +215,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 12 */
+        }, /* File Index 12 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -239,8 +227,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 13 */
+        }, /* File Index 13 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -252,8 +239,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 14 */
+        }, /* File Index 14 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -265,8 +251,7 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-        /* File Index 15 */
+        }, /* File Index 15 */
         {
             /* .Movename      = */ DS_EMPTY_STRING,
             /* .Pathname      = */ DS_EMPTY_STRING,
@@ -278,8 +263,8 @@ DS_DestFileTable_t DS_DestFileTable = {
             /* .MaxFileSize   = */ DS_UNUSED,
             /* .MaxFileAge    = */ DS_UNUSED,
             /* .SequenceCount = */ DS_UNUSED,
-        },
-    }};
+        }, }
+};
 
 /*
 ** Sample Destination File Table Header

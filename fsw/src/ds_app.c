@@ -146,7 +146,9 @@ void DS_AppMain(void)
         /*
         ** Send an event describing the reason for the termination...
         */
-        CFE_EVS_SendEvent(DS_EXIT_ERR_EID, CFE_EVS_EventType_CRITICAL, "Application terminating, err = 0x%08X",
+        CFE_EVS_SendEvent(DS_EXIT_ERR_EID,
+                          CFE_EVS_EventType_CRITICAL,
+                          "Application terminating, err = 0x%08X",
                           (unsigned int)Result);
 
         /*
@@ -207,7 +209,9 @@ CFE_Status_t DS_AppInitialize(void)
         Result = CFE_SB_CreatePipe(&DS_AppData.CmdPipe, DS_APP_PIPE_DEPTH, DS_APP_PIPE_NAME);
         if (Result != CFE_SUCCESS)
         {
-            CFE_EVS_SendEvent(DS_INIT_ERR_EID, CFE_EVS_EventType_ERROR, "Unable to create input pipe, err = 0x%08X",
+            CFE_EVS_SendEvent(DS_INIT_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Unable to create input pipe, err = 0x%08X",
                               (unsigned int)Result);
         }
     }
@@ -221,8 +225,10 @@ CFE_Status_t DS_AppInitialize(void)
 
         if (Result != CFE_SUCCESS)
         {
-            CFE_EVS_SendEvent(DS_INIT_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Unable to subscribe to HK request, err = 0x%08X", (unsigned int)Result);
+            CFE_EVS_SendEvent(DS_INIT_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Unable to subscribe to HK request, err = 0x%08X",
+                              (unsigned int)Result);
         }
     }
 
@@ -235,8 +241,10 @@ CFE_Status_t DS_AppInitialize(void)
 
         if (Result != CFE_SUCCESS)
         {
-            CFE_EVS_SendEvent(DS_INIT_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Unable to subscribe to DS commands, err = 0x%08X", (unsigned int)Result);
+            CFE_EVS_SendEvent(DS_INIT_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Unable to subscribe to DS commands, err = 0x%08X",
+                              (unsigned int)Result);
         }
     }
 
@@ -261,9 +269,14 @@ CFE_Status_t DS_AppInitialize(void)
     */
     if (Result == CFE_SUCCESS)
     {
-        CFE_EVS_SendEvent(DS_INIT_INF_EID, CFE_EVS_EventType_INFORMATION,
-                          "Application initialized, version %d.%d.%d.%d, data at %p", DS_MAJOR_VERSION,
-                          DS_MINOR_VERSION, DS_REVISION, DS_MISSION_REV, (void *)&DS_AppData);
+        CFE_EVS_SendEvent(DS_INIT_INF_EID,
+                          CFE_EVS_EventType_INFORMATION,
+                          "Application initialized, version %d.%d.%d.%d, data at %p",
+                          DS_MAJOR_VERSION,
+                          DS_MINOR_VERSION,
+                          DS_REVISION,
+                          DS_MISSION_REV,
+                          (void *)&DS_AppData);
     }
 
     return Result;
@@ -284,8 +297,8 @@ void DS_AppStorePacket(CFE_SB_MsgId_t MessageID, const CFE_SB_Buffer_t *BufPtr)
         */
         DS_AppData.DisabledPktCounter++;
     }
-    else if ((DS_AppData.FilterTblPtr == (DS_FilterTable_t *)NULL) ||
-             (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL))
+    else if ((DS_AppData.FilterTblPtr == (DS_FilterTable_t *)NULL)
+             || (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL))
     {
         /*
         ** Must have both tables loaded in order to store data...

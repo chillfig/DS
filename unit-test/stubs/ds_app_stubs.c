@@ -46,7 +46,6 @@ CFE_Status_t DS_AppInitialize(void)
  */
 void DS_AppMain(void)
 {
-
     UT_GenStub_Execute(DS_AppMain, Basic, NULL);
 }
 

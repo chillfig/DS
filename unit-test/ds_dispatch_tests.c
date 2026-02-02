@@ -44,9 +44,9 @@
 static void DS_Dispatch_Test_SetupMsg(CFE_SB_MsgId_t MsgId, CFE_MSG_FcnCode_t FcnCode, size_t MsgSize)
 {
     /* Note some paths get the MsgId/FcnCode multiple times, so register accordingly, just in case */
-    CFE_SB_MsgId_t    RegMsgId[2]   = {MsgId, MsgId};
-    CFE_MSG_FcnCode_t RegFcnCode[2] = {FcnCode, FcnCode};
-    size_t            RegMsgSize[2] = {MsgSize, MsgSize};
+    CFE_SB_MsgId_t    RegMsgId[2]   = { MsgId, MsgId };
+    CFE_MSG_FcnCode_t RegFcnCode[2] = { FcnCode, FcnCode };
+    size_t            RegMsgSize[2] = { MsgSize, MsgSize };
 
     UT_ResetState(UT_KEY(CFE_MSG_GetMsgId));
     UT_ResetState(UT_KEY(CFE_MSG_GetFcnCode));

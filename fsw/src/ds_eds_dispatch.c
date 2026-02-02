@@ -121,7 +121,9 @@ void DS_AppPipe(const CFE_SB_Buffer_t *BufPtr)
 
         if (status == CFE_STATUS_VALIDATION_FAILURE || status == CFE_STATUS_UNKNOWN_MSG_ID)
         {
-            CFE_EVS_SendEvent(DS_MID_ERR_EID, CFE_EVS_EventType_ERROR, "Invalid command pipe message ID: 0x%08lX",
+            CFE_EVS_SendEvent(DS_MID_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Invalid command pipe message ID: 0x%08lX",
                               (unsigned long)CFE_SB_MsgIdToValue(MsgId));
         }
         else
@@ -129,8 +131,8 @@ void DS_AppPipe(const CFE_SB_Buffer_t *BufPtr)
             CFE_MSG_GetFcnCode(&BufPtr->Msg, &MsgFc);
             if (status == CFE_STATUS_WRONG_MSG_LENGTH)
             {
-                if (CFE_SB_MsgIdToValue(MsgId) == DS_CMD_MID &&
-                    MsgFc < (sizeof(DS_EVENTID_CC_LOOKUP) / sizeof(DS_EVENTID_CC_LOOKUP[0])))
+                if (CFE_SB_MsgIdToValue(MsgId) == DS_CMD_MID
+                    && MsgFc < (sizeof(DS_EVENTID_CC_LOOKUP) / sizeof(DS_EVENTID_CC_LOOKUP[0])))
                 {
                     FailEventID = DS_EVENTID_CC_LOOKUP[MsgFc];
                 }
@@ -139,14 +141,21 @@ void DS_AppPipe(const CFE_SB_Buffer_t *BufPtr)
                     FailEventID = DS_HKREQ_LEN_ERR_EID;
                 }
                 CFE_MSG_GetSize(&BufPtr->Msg, &MsgSize);
-                CFE_EVS_SendEvent(FailEventID, CFE_EVS_EventType_ERROR,
+                CFE_EVS_SendEvent(FailEventID,
+                                  CFE_EVS_EventType_ERROR,
                                   "Invalid command length: MID = 0x%08X, CC = %d, Len = %lu",
-                                  (unsigned int)CFE_SB_MsgIdToValue(MsgId), (int)MsgFc, (unsigned long)MsgSize);
+                                  (unsigned int)CFE_SB_MsgIdToValue(MsgId),
+                                  (int)MsgFc,
+                                  (unsigned long)MsgSize);
             }
             else
             {
-                CFE_EVS_SendEvent(DS_CC_ERR_EID, CFE_EVS_EventType_ERROR, "Invalid message recvd: MID = 0x%08X, CC = %d, status=%d",
-                                  (unsigned int)CFE_SB_MsgIdToValue(MsgId), (int)MsgFc, (int)status);
+                CFE_EVS_SendEvent(DS_CC_ERR_EID,
+                                  CFE_EVS_EventType_ERROR,
+                                  "Invalid message recvd: MID = 0x%08X, CC = %d, status=%d",
+                                  (unsigned int)CFE_SB_MsgIdToValue(MsgId),
+                                  (int)MsgFc,
+                                  (int)status);
             }
         }
     }

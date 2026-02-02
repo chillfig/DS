@@ -52,8 +52,11 @@
 /* Apply common filter algorithm to Software Bus packet            */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr, uint16 FilterType, uint16 Algorithm_N, uint16 Algorithm_X,
-                         uint16 Algorithm_O)
+bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr,
+                         uint16             FilterType,
+                         uint16             Algorithm_N,
+                         uint16             Algorithm_X,
+                         uint16             Algorithm_O)
 {
     /*
     ** Algorithm_N = the filter will pass this many packets
@@ -231,8 +234,10 @@ void DS_FileStorePacket(CFE_SB_MsgId_t MessageID, const CFE_SB_Buffer_t *BufPtr)
                     /*
                     ** Apply filter algorithm to the packet...
                     */
-                    FilterResult = DS_IsPacketFiltered((CFE_MSG_Message_t *)BufPtr, FilterParms->FilterType,
-                                                       FilterParms->Algorithm_N, FilterParms->Algorithm_X,
+                    FilterResult = DS_IsPacketFiltered((CFE_MSG_Message_t *)BufPtr,
+                                                       FilterParms->FilterType,
+                                                       FilterParms->Algorithm_N,
+                                                       FilterParms->Algorithm_X,
                                                        FilterParms->Algorithm_O);
                     if (FilterResult == false)
                     {
@@ -355,7 +360,7 @@ void DS_FileWriteData(int32 FileIndex, const void *FileData, uint32 DataLength)
         */
         DS_AppData.FileWriteCounter++;
 
-        FileStatus->FileSize += DataLength;
+        FileStatus->FileSize   += DataLength;
         FileStatus->FileGrowth += DataLength;
     }
     else
@@ -400,7 +405,7 @@ void DS_FileWriteHeader(int32 FileIndex)
             */
             DS_AppData.FileWriteCounter++;
 
-            FileStatus->FileSize += sizeof(CFE_FS_Header_t);
+            FileStatus->FileSize   += sizeof(CFE_FS_Header_t);
             FileStatus->FileGrowth += sizeof(CFE_FS_Header_t);
 
             /*
@@ -423,7 +428,7 @@ void DS_FileWriteHeader(int32 FileIndex)
                 */
                 DS_AppData.FileWriteCounter++;
 
-                FileStatus->FileSize += sizeof(DS_FileHeader_t);
+                FileStatus->FileSize   += sizeof(DS_FileHeader_t);
                 FileStatus->FileGrowth += sizeof(DS_FileHeader_t);
             }
             else
@@ -458,9 +463,13 @@ void DS_FileWriteError(uint32 FileIndex, uint32 DataLength, int32 WriteResult)
     */
     DS_AppData.FileWriteErrCounter++;
 
-    CFE_EVS_SendEvent(DS_WRITE_FILE_ERR_EID, CFE_EVS_EventType_ERROR,
-                      "FILE WRITE error: result = %d, length = %d, dest = %d, name = '%s'", (int)WriteResult,
-                      (int)DataLength, (int)FileIndex, FileStatus->FileName);
+    CFE_EVS_SendEvent(DS_WRITE_FILE_ERR_EID,
+                      CFE_EVS_EventType_ERROR,
+                      "FILE WRITE error: result = %d, length = %d, dest = %d, name = '%s'",
+                      (int)WriteResult,
+                      (int)DataLength,
+                      (int)FileIndex,
+                      FileStatus->FileName);
 
     DS_FileCloseDest(FileIndex);
 
@@ -489,7 +498,9 @@ void DS_FileCreateDest(uint32 FileIndex)
         /*
         ** Success - create a new destination file...
         */
-        Result = OS_OpenCreate(&LocalFileHandle, FileStatus->FileName, OS_FILE_FLAG_CREATE | OS_FILE_FLAG_TRUNCATE,
+        Result = OS_OpenCreate(&LocalFileHandle,
+                               FileStatus->FileName,
+                               OS_FILE_FLAG_CREATE | OS_FILE_FLAG_TRUNCATE,
                                OS_READ_WRITE);
 
         if (Result != OS_SUCCESS)
@@ -499,8 +510,11 @@ void DS_FileCreateDest(uint32 FileIndex)
             */
             DS_AppData.FileWriteErrCounter++;
 
-            CFE_EVS_SendEvent(DS_CREATE_FILE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "FILE CREATE error: result = %d, dest = %d, name = '%s'", (int)Result, (int)FileIndex,
+            CFE_EVS_SendEvent(DS_CREATE_FILE_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "FILE CREATE error: result = %d, dest = %d, name = '%s'",
+                              (int)Result,
+                              (int)FileIndex,
                               FileStatus->FileName);
 
             memset(FileStatus->FileName, 0, sizeof(FileStatus->FileName));
@@ -572,7 +586,10 @@ void DS_FileCreateName(uint32 FileIndex)
         }
 
         /* Add base name */
-        CFE_SB_MessageStringGet(&Workname[TotalLength], DestFile->Basename, NULL, sizeof(Workname) - TotalLength,
+        CFE_SB_MessageStringGet(&Workname[TotalLength],
+                                DestFile->Basename,
+                                NULL,
+                                sizeof(Workname) - TotalLength,
                                 sizeof(DestFile->Basename));
         TotalLength = strlen(Workname);
 
@@ -594,7 +611,10 @@ void DS_FileCreateName(uint32 FileIndex)
             }
 
             /* Append the extension portion to the path/base+sequence portion */
-            CFE_SB_MessageStringGet(&Workname[TotalLength], DestFile->Extension, NULL, sizeof(Workname) - TotalLength,
+            CFE_SB_MessageStringGet(&Workname[TotalLength],
+                                    DestFile->Extension,
+                                    NULL,
+                                    sizeof(Workname) - TotalLength,
                                     sizeof(DestFile->Extension));
         }
 
@@ -607,17 +627,25 @@ void DS_FileCreateName(uint32 FileIndex)
         else
         {
             /* Error - send event and disable destination */
-            CFE_EVS_SendEvent(DS_FILE_NAME_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(DS_FILE_NAME_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "FILE NAME error: dest = %d, path = '%s', base = '%s', seq = '%s', ext = '%s'",
-                              (int)FileIndex, DestFile->Pathname, DestFile->Basename, Sequence, DestFile->Extension);
+                              (int)FileIndex,
+                              DestFile->Pathname,
+                              DestFile->Basename,
+                              Sequence,
+                              DestFile->Extension);
             DS_AppData.FileStatus[FileIndex].FileState = DS_DISABLED;
         }
     }
     else
     {
         /* Send event and disable for invalid path */
-        CFE_EVS_SendEvent(DS_FILE_CREATE_EMPTY_PATH_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "FILE NAME error: Path empty. dest = %d, path = '%s'", (int)FileIndex, DestFile->Pathname);
+        CFE_EVS_SendEvent(DS_FILE_CREATE_EMPTY_PATH_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "FILE NAME error: Path empty. dest = %d, path = '%s'",
+                          (int)FileIndex,
+                          DestFile->Pathname);
         DS_AppData.FileStatus[FileIndex].FileState = DS_DISABLED;
     }
 }
@@ -802,7 +830,7 @@ void DS_FileCloseDest(int32 FileIndex)
     DS_AppFileStatus_t *FileStatus = &DS_AppData.FileStatus[FileIndex];
     int32               OS_result;
     int32               PathLength;
-    char *              FileName;
+    char               *FileName;
     char                PathName[DS_TOTAL_FNAME_BUFSIZE];
 
     /*
@@ -820,8 +848,11 @@ void DS_FileCloseDest(int32 FileIndex)
             /*
             ** Make sure directory name does not end with slash character...
             */
-            CFE_SB_MessageStringGet(PathName, DS_AppData.DestFileTblPtr->File[FileIndex].Movename, NULL,
-                                    sizeof(PathName), sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
+            CFE_SB_MessageStringGet(PathName,
+                                    DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+                                    NULL,
+                                    sizeof(PathName),
+                                    sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
             PathLength = strlen(PathName);
             if (PathName[PathLength - 1] == '/')
             {
@@ -856,9 +887,12 @@ void DS_FileCloseDest(int32 FileIndex)
                         /*
                         ** Error - send event but leave destination enabled...
                         */
-                        CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID, CFE_EVS_EventType_ERROR,
-                                          "FILE MOVE error: src = '%s', tgt = '%s', result = %d", FileStatus->FileName,
-                                          PathName, (int)OS_result);
+                        CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID,
+                                          CFE_EVS_EventType_ERROR,
+                                          "FILE MOVE error: src = '%s', tgt = '%s', result = %d",
+                                          FileStatus->FileName,
+                                          PathName,
+                                          (int)OS_result);
                     }
                 }
                 else
@@ -866,8 +900,11 @@ void DS_FileCloseDest(int32 FileIndex)
                     /*
                     ** Error - send event but leave destination enabled...
                     */
-                    CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID, CFE_EVS_EventType_ERROR,
-                                      "FILE MOVE error: dir name = '%s', filename = '%s'", PathName, FileName);
+                    CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID,
+                                      CFE_EVS_EventType_ERROR,
+                                      "FILE MOVE error: dir name = '%s', filename = '%s'",
+                                      PathName,
+                                      FileName);
                 }
             }
             else
@@ -875,8 +912,10 @@ void DS_FileCloseDest(int32 FileIndex)
                 /*
                 ** Error - send event but leave destination enabled...
                 */
-                CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID, CFE_EVS_EventType_ERROR,
-                                  "FILE MOVE error: dir name = '%s', filename = 'NULL'", PathName);
+                CFE_EVS_SendEvent(DS_MOVE_FILE_ERR_EID,
+                                  CFE_EVS_EventType_ERROR,
+                                  "FILE MOVE error: dir name = '%s', filename = 'NULL'",
+                                  PathName);
             }
 
             /* Update the path name for reporting */
@@ -950,7 +989,7 @@ void DS_FileTestAge(uint32 ElapsedSeconds)
 void DS_FileTransmit(DS_AppFileStatus_t *FileStatus)
 {
     CFE_SB_Buffer_t *PktBuf;
-    DS_FileInfo_t *  FileInfo;
+    DS_FileInfo_t   *FileInfo;
 
     /*
     ** Get a Message block of memory and initialize it
@@ -969,12 +1008,12 @@ void DS_FileTransmit(DS_AppFileStatus_t *FileStatus)
         /*
         ** Set file age and size...
         */
-        FileInfo->FileAge  = FileStatus->FileAge;
-        FileInfo->FileSize = FileStatus->FileSize;
+        FileInfo->FileAge       = FileStatus->FileAge;
+        FileInfo->FileSize      = FileStatus->FileSize;
         /*
         ** Set file growth rate (computed when process last HK request)...
         */
-        FileInfo->FileRate = FileStatus->FileRate;
+        FileInfo->FileRate      = FileStatus->FileRate;
         /*
         ** Set current filename sequence count...
         */
@@ -982,11 +1021,11 @@ void DS_FileTransmit(DS_AppFileStatus_t *FileStatus)
         /*
         ** Set file enable/disable state...
         */
-        FileInfo->EnableState = FileStatus->FileState;
+        FileInfo->EnableState   = FileStatus->FileState;
         /*
         ** Set file closed state...
         */
-        FileInfo->OpenState = DS_CLOSED;
+        FileInfo->OpenState     = DS_CLOSED;
         /*
         ** Set current open filename...
         */
