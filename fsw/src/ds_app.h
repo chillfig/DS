@@ -77,7 +77,7 @@ typedef struct
     CFE_TBL_Handle_t FilterTblHandle;   /**< \brief Packet filter table handle */
     CFE_TBL_Handle_t DestFileTblHandle; /**< \brief Destination file table handle */
 
-    DS_FilterTable_t *  FilterTblPtr;   /**< \brief Packet filter table data pointer */
+    DS_FilterTable_t   *FilterTblPtr;   /**< \brief Packet filter table data pointer */
     DS_DestFileTable_t *DestFileTblPtr; /**< \brief Destination file table data pointer */
 
     uint8 CmdAcceptedCounter;   /**< \brief Count of valid commands received */

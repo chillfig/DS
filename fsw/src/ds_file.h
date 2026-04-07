@@ -321,7 +321,10 @@ void DS_FileTransmit(DS_AppFileStatus_t *FileStatus);
  *  \retval true  The packet should be filtered (not used)
  *  \retval false The packet should not be filtered (used)
  */
-bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr, uint16 FilterType, uint16 Algorithm_N, uint16 Algorithm_X,
-                         uint16 Algorithm_O);
+bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr,
+                         uint16             FilterType,
+                         uint16             Algorithm_N,
+                         uint16             Algorithm_X,
+                         uint16             Algorithm_O);
 
 #endif

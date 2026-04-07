@@ -52,10 +52,10 @@ typedef struct
  */
 typedef struct
 {
-    CFE_SB_MsgId_t MessageID; /**< \brief Message ID of existing entry in Packet Filter Table
-                                   \details DS defines Message ID zero to be unused */
-    uint16 FilterParmsIndex;  /**< \brief Index into Filter Parms Array */
-    uint16 FileTableIndex;    /**< \brief Index into Destination File Table */
+    CFE_SB_MsgId_t MessageID;        /**< \brief Message ID of existing entry in Packet Filter Table
+                                          \details DS defines Message ID zero to be unused */
+    uint16         FilterParmsIndex; /**< \brief Index into Filter Parms Array */
+    uint16         FileTableIndex;   /**< \brief Index into Destination File Table */
 } DS_FilterFile_Payload_t;
 
 /**
@@ -65,10 +65,10 @@ typedef struct
  */
 typedef struct
 {
-    CFE_SB_MsgId_t MessageID; /**< \brief Message ID of existing entry in Packet Filter Table
-                                   \details DS defines Message ID zero to be unused */
-    uint16 FilterParmsIndex;  /**< \brief Index into Filter Parms Array */
-    uint16 FilterType;        /**< \brief Filter type (packet count or time) */
+    CFE_SB_MsgId_t MessageID;        /**< \brief Message ID of existing entry in Packet Filter Table
+                                          \details DS defines Message ID zero to be unused */
+    uint16         FilterParmsIndex; /**< \brief Index into Filter Parms Array */
+    uint16         FilterType;       /**< \brief Filter type (packet count or time) */
 } DS_FilterType_Payload_t;
 
 /**
@@ -78,12 +78,12 @@ typedef struct
  */
 typedef struct
 {
-    CFE_SB_MsgId_t MessageID; /**< \brief Message ID of existing entry in Packet Filter Table
-                                   \details DS defines Message ID zero to be unused */
-    uint16 FilterParmsIndex;  /**< \brief Index into Filter Parms Array */
-    uint16 Algorithm_N;       /**< \brief Algorithm value N (pass this many) */
-    uint16 Algorithm_X;       /**< \brief Algorithm value X (out of this many) */
-    uint16 Algorithm_O;       /**< \brief Algorithm value O (at this offset) */
+    CFE_SB_MsgId_t MessageID;        /**< \brief Message ID of existing entry in Packet Filter Table
+                                          \details DS defines Message ID zero to be unused */
+    uint16         FilterParmsIndex; /**< \brief Index into Filter Parms Array */
+    uint16         Algorithm_N;      /**< \brief Algorithm value N (pass this many) */
+    uint16         Algorithm_X;      /**< \brief Algorithm value X (out of this many) */
+    uint16         Algorithm_O;      /**< \brief Algorithm value O (at this offset) */
 } DS_FilterParms_Payload_t;
 
 /**

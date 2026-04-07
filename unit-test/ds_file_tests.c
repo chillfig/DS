@@ -294,9 +294,11 @@ void DS_FileSetupWrite_Test_MaxFileSizeExceeded(void)
     DS_AppData.FileStatus[FileIndex].FileSize              = 10;
 
     UT_DS_SetDestFileEntry(&DS_AppData.DestFileTblPtr->File[FileIndex]);
-    strncpy(DS_AppData.FileStatus[FileIndex].FileName, "directory1/",
+    strncpy(DS_AppData.FileStatus[FileIndex].FileName,
+            "directory1/",
             sizeof(DS_AppData.FileStatus[FileIndex].FileName));
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "directory2/movename/",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "directory2/movename/",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
 
     /* Execute the function being tested */
@@ -347,7 +349,8 @@ void DS_FileWriteData_Test_Error(void)
     /* Set to reach error case being tested (DS_FileWriteError) */
     UT_SetDefaultReturnValue(UT_KEY(OS_write), -1);
 
-    strncpy(DS_AppData.FileStatus[FileIndex].FileName, "directory1/",
+    strncpy(DS_AppData.FileStatus[FileIndex].FileName,
+            "directory1/",
             sizeof(DS_AppData.FileStatus[FileIndex].FileName));
     DS_AppData.DestFileTblPtr->File[FileIndex].Movename[0] = '\0';
 
@@ -604,8 +607,10 @@ void DS_FileCreateName_Test_Nominal(void)
     UtAssert_VOIDCALL(DS_FileCreateName(FileIndex));
 
     /* Verify results */
-    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName, sizeof(DS_AppData.FileStatus[FileIndex].FileName),
-                          StrCompare, sizeof(StrCompare));
+    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName,
+                          sizeof(DS_AppData.FileStatus[FileIndex].FileName),
+                          StrCompare,
+                          sizeof(StrCompare));
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
 }
@@ -621,7 +626,8 @@ void DS_FileCreateName_Test_NominalWithSeparator(void)
 
     DS_AppData.DestFileTblPtr->File[FileIndex].FileNameType = DS_BY_COUNT;
     UT_DS_SetDestFileEntry(&DS_AppData.DestFileTblPtr->File[FileIndex]);
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Pathname, "path/",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Pathname,
+            "path/",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Pathname));
 
     DS_AppData.FileStatus[FileIndex].FileCount = 1;
@@ -630,8 +636,10 @@ void DS_FileCreateName_Test_NominalWithSeparator(void)
     UtAssert_VOIDCALL(DS_FileCreateName(FileIndex));
 
     /* Verify results */
-    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName, sizeof(DS_AppData.FileStatus[FileIndex].FileName),
-                          StrCompare, sizeof(StrCompare));
+    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName,
+                          sizeof(DS_AppData.FileStatus[FileIndex].FileName),
+                          StrCompare,
+                          sizeof(StrCompare));
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
 }
@@ -647,7 +655,8 @@ void DS_FileCreateName_Test_NominalWithPeriod(void)
 
     DS_AppData.DestFileTblPtr->File[FileIndex].FileNameType = DS_BY_COUNT;
     UT_DS_SetDestFileEntry(&DS_AppData.DestFileTblPtr->File[FileIndex]);
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Extension, ".ext",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Extension,
+            ".ext",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Extension));
 
     DS_AppData.FileStatus[FileIndex].FileCount = 1;
@@ -656,8 +665,10 @@ void DS_FileCreateName_Test_NominalWithPeriod(void)
     UtAssert_VOIDCALL(DS_FileCreateName(FileIndex));
 
     /* Verify results */
-    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName, sizeof(DS_AppData.FileStatus[FileIndex].FileName),
-                          StrCompare, sizeof(StrCompare));
+    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName,
+                          sizeof(DS_AppData.FileStatus[FileIndex].FileName),
+                          StrCompare,
+                          sizeof(StrCompare));
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
 }
@@ -734,9 +745,9 @@ void DS_FileCreateName_Test_PathBaseSeqExtTooLarge(void)
     int32               FileIndex = 0;
     DS_DestFileEntry_t *DestPtr;
 
-    DestPtr               = &DS_AppData.DestFileTblPtr->File[FileIndex];
+    DestPtr = &DS_AppData.DestFileTblPtr->File[FileIndex];
 
-    memset(DestPtr, 0, sizeof (*DestPtr));
+    memset(DestPtr, 0, sizeof(*DestPtr));
     DestPtr->FileNameType = DS_BY_COUNT;
 
     /* Set to fail the condition "if (strlen(Workname) < DS_TOTAL_FNAME_BUFSIZE)" */
@@ -776,8 +787,10 @@ void DS_FileCreateName_Test_ExtensionZero(void)
     UtAssert_VOIDCALL(DS_FileCreateName(FileIndex));
 
     /* Verify results */
-    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName, sizeof(DS_AppData.FileStatus[FileIndex].FileName),
-                          StrCompare, sizeof(StrCompare));
+    UtAssert_STRINGBUF_EQ(DS_AppData.FileStatus[FileIndex].FileName,
+                          sizeof(DS_AppData.FileStatus[FileIndex].FileName),
+                          StrCompare,
+                          sizeof(StrCompare));
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
 }
 
@@ -819,7 +832,8 @@ void DS_FileCreateSequence_Test_ByTime(void)
     UT_SetHandlerFunction(UT_KEY(CFE_TIME_Print), &UT_CFE_TIME_Print_CustomHandler, NULL);
 
     /* Execute the function being tested */
-    UtAssert_VOIDCALL(DS_FileCreateSequence(Sequence, DS_AppData.DestFileTblPtr->File[FileIndex].FileNameType,
+    UtAssert_VOIDCALL(DS_FileCreateSequence(Sequence,
+                                            DS_AppData.DestFileTblPtr->File[FileIndex].FileNameType,
                                             DS_AppData.FileStatus[FileIndex].FileCount));
 
     /* Verify results */
@@ -897,9 +911,11 @@ void DS_FileCloseDest_Test_PlatformConfigMoveFiles_Nominal(void)
     /* Set up the handle */
     OS_OpenCreate(&DS_AppData.FileStatus[FileIndex].FileHandle, NULL, 0, 0);
 
-    strncpy(DS_AppData.FileStatus[FileIndex].FileName, "directory1/filename",
+    strncpy(DS_AppData.FileStatus[FileIndex].FileName,
+            "directory1/filename",
             sizeof(DS_AppData.FileStatus[FileIndex].FileName));
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "directory2/movename/",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "directory2/movename/",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
     DS_AppData.EnableMoveFiles = DS_ENABLED;
 
@@ -921,9 +937,11 @@ void DS_FileCloseDest_Test_PlatformConfigMoveFiles_MoveError(void)
     /* Set up the handle */
     OS_OpenCreate(&DS_AppData.FileStatus[FileIndex].FileHandle, NULL, 0, 0);
 
-    strncpy(DS_AppData.FileStatus[FileIndex].FileName, "directory1/filename",
+    strncpy(DS_AppData.FileStatus[FileIndex].FileName,
+            "directory1/filename",
             sizeof(DS_AppData.FileStatus[FileIndex].FileName));
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "directory2/movename/",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "directory2/movename/",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
     DS_AppData.EnableMoveFiles = DS_ENABLED;
 
@@ -953,7 +971,8 @@ void DS_FileCloseDest_Test_PlatformConfigMoveFiles_FilenameTooLarge(void)
     strncpy(DS_AppData.FileStatus[FileIndex].FileName, DirName, DirNameLen);
     memset(&DS_AppData.FileStatus[FileIndex].FileName[DirNameLen - 1], 'f', DS_TOTAL_FNAME_BUFSIZE - DirNameLen);
     DS_AppData.FileStatus[FileIndex].FileName[DS_TOTAL_FNAME_BUFSIZE - 1] = '\0';
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "directory2/movename/",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "directory2/movename/",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
     DS_AppData.EnableMoveFiles = DS_ENABLED;
 
@@ -975,7 +994,8 @@ void DS_FileCloseDest_Test_PlatformConfigMoveFiles_FilenameNull(void)
     /* Set up the handle */
     OS_OpenCreate(&DS_AppData.FileStatus[FileIndex].FileHandle, NULL, 0, 0);
 
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "directory2/movename",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "directory2/movename",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
     DS_AppData.EnableMoveFiles = DS_ENABLED;
 
@@ -999,7 +1019,8 @@ void DS_FileCloseDest_Test_PlatformConfigMoveFiles_MovenameNull(void)
     /* Set up the handle */
     OS_OpenCreate(&DS_AppData.FileStatus[FileIndex].FileHandle, NULL, 0, 0);
 
-    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename, "",
+    strncpy(DS_AppData.DestFileTblPtr->File[FileIndex].Movename,
+            "",
             sizeof(DS_AppData.DestFileTblPtr->File[FileIndex].Movename));
     DS_AppData.EnableMoveFiles = DS_ENABLED;
 
