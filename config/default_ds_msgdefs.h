@@ -42,7 +42,6 @@
 typedef struct
 {
     uint16 EnableState; /**< \brief Application enable/disable state */
-    uint16 Padding;     /**< \brief Structure Padding on 32-bit boundaries */
 } DS_AppState_Payload_t;
 
 /**
@@ -119,7 +118,6 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex;                     /**< \brief Index into Destination File Table */
-    uint16 Padding;                            /**< \brief Structure Padding on 32-bit boundaries */
     char   Pathname[CFE_MISSION_MAX_PATH_LEN]; /**< \brief Path portion of filename */
 } DS_DestPath_Payload_t;
 
@@ -131,7 +129,6 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex;                     /**< \brief Index into Destination File Table */
-    uint16 Padding;                            /**< \brief Structure Padding on 32-bit boundaries */
     char   Basename[CFE_MISSION_MAX_FILE_LEN]; /**< \brief Base portion of filename */
 } DS_DestBase_Payload_t;
 
@@ -143,7 +140,6 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex;                  /**< \brief Index into Destination File Table */
-    uint16 Padding;                         /**< \brief Structure Padding on 32-bit boundaries */
     char   Extension[DS_EXTENSION_BUFSIZE]; /**< \brief Extension portion of filename */
 } DS_DestExt_Payload_t;
 
@@ -157,7 +153,7 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex; /**< \brief Index into Destination File Table */
-    uint16 Padding;        /**< \brief Structure Padding on 32-bit boundaries */
+    uint8  Padding[2];     /**< \brief Structure Padding on 32-bit boundaries */
     uint32 MaxFileSize;    /**< \brief Max file size (bytes) before re-open */
 } DS_DestSize_Payload_t;
 
@@ -169,9 +165,8 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex; /**< \brief Index into Destination File Table */
-    uint16 Padding;        /**< \brief Structure Padding on 32-bit boundaries */
-
-    uint32 MaxFileAge; /**< \brief Max file age (seconds) */
+    uint8  Padding[2];     /**< \brief Structure Padding on 32-bit boundaries */
+    uint32 MaxFileAge;     /**< \brief Max file age (seconds) */
 } DS_DestAge_Payload_t;
 
 /**
@@ -182,9 +177,8 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex; /**< \brief Index into Destination File Table */
-    uint16 Padding;        /**< \brief Structure Padding on 32-bit boundaries */
-
-    uint32 SequenceCount; /**< \brief Sequence count portion of filename */
+    uint8  Padding[2];     /**< \brief Structure Padding on 32-bit boundaries */
+    uint32 SequenceCount;  /**< \brief Sequence count portion of filename */
 } DS_DestCount_Payload_t;
 
 /**
@@ -195,7 +189,6 @@ typedef struct
 typedef struct
 {
     uint16 FileTableIndex; /**< \brief Index into Destination File Table */
-    uint16 Padding;        /**< \brief Structure Padding on 32-bit boundaries */
 } DS_CloseFile_Payload_t;
 
 /**
@@ -224,7 +217,7 @@ typedef struct
     uint8  FilterTblLoadCounter; /**< \brief Count of packet filter table loads */
     uint8  FilterTblErrCounter;  /**< \brief Count of failed attempts to get table data pointer */
     uint8  AppEnableState;       /**< \brief Application enable/disable state */
-    uint8  Spare8;               /**< \brief Structure alignment padding */
+    uint8  Padding;              /**< \brief Structure alignment padding */
     uint16 FileWriteCounter;     /**< \brief Count of good destination file writes */
     uint16 FileWriteErrCounter;  /**< \brief Count of bad destination file writes */
     uint16 FileUpdateCounter;    /**< \brief Count of good updates to secondary header */
