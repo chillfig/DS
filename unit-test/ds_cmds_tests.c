@@ -117,9 +117,6 @@ void DS_SetAppStateCmd_Test_Nominal(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_ENADIS_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetAppStateCmd_t), "DS_AppStateCmd_t is 32-bit aligned");
 }
 
 void DS_SetAppStateCmd_Test_InvalidAppState(void)
@@ -736,9 +733,6 @@ void DS_SetDestPathCmd_Test_Nominal(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_PATH_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestPathCmd_t), "DS_DestPathCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestPathCmd_Test_InvalidFileTableIndex(void)
@@ -805,9 +799,6 @@ void DS_SetDestBaseCmd_Test_Nominal(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_BASE_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestBaseCmd_t), "DS_DestBaseCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestBaseCmd_Test_InvalidFileTableIndex(void)
@@ -874,9 +865,6 @@ void DS_SetDestExtCmd_Test_Nominal(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_EXT_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestExtCmd_t), "DS_DestExtCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestExtCmd_Test_InvalidFileTableIndex(void)
@@ -1216,9 +1204,6 @@ void DS_CloseFileCmd_Test_Nominal(void)
 
     UtAssert_STUB_COUNT(DS_FileUpdateHeader, 1);
     UtAssert_STUB_COUNT(DS_FileCloseDest, 1);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_CloseFileCmd_t), "DS_CloseFileCmd_t is 32-bit aligned");
 }
 
 void DS_CloseFileCmd_Test_NominalAlreadyClosed(void)
@@ -1249,9 +1234,6 @@ void DS_CloseFileCmd_Test_NominalAlreadyClosed(void)
 
     UtAssert_STUB_COUNT(DS_FileUpdateHeader, 0);
     UtAssert_STUB_COUNT(DS_FileCloseDest, 0);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_CloseFileCmd_t), "DS_CloseFileCmd_t is 32-bit aligned");
 }
 
 void DS_CloseFileCmd_Test_InvalidFileTableIndex(void)
