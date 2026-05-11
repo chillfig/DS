@@ -89,9 +89,12 @@ bool DS_VerifyLength(const CFE_SB_Buffer_t *BufPtr, size_t ExpectedLength, uint1
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(FailEventID, CFE_EVS_EventType_ERROR,
-                          "Invalid %s command length: expected = %lu, actual = %lu", CommandName,
-                          (unsigned long)ExpectedLength, (unsigned long)ActualLength);
+        CFE_EVS_SendEvent(FailEventID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid %s command length: expected = %lu, actual = %lu",
+                          CommandName,
+                          (unsigned long)ExpectedLength,
+                          (unsigned long)ActualLength);
     }
 
     return (ExpectedLength == ActualLength);
@@ -569,8 +572,11 @@ void DS_AppProcessCmd(const CFE_SB_Buffer_t *BufPtr)
         ** DS application command with unknown command code...
         */
         default:
-            CFE_EVS_SendEvent(DS_CC_ERR_EID, CFE_EVS_EventType_ERROR, "Invalid command code: MID = 0x%08X, CC = %d",
-                              DS_CMD_MID, CommandCode);
+            CFE_EVS_SendEvent(DS_CC_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Invalid command code: MID = 0x%08X, CC = %d",
+                              DS_CMD_MID,
+                              CommandCode);
 
             DS_AppData.CmdRejectedCounter++;
             break;

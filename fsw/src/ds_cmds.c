@@ -60,8 +60,13 @@ CFE_Status_t DS_NoopCmd(const DS_NoopCmd_t *BufPtr)
     */
     DS_AppData.CmdAcceptedCounter++;
 
-    CFE_EVS_SendEvent(DS_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "NOOP command, Version %d.%d.%d.%d",
-                      DS_MAJOR_VERSION, DS_MINOR_VERSION, DS_REVISION, DS_MISSION_REV);
+    CFE_EVS_SendEvent(DS_NOOP_INF_EID,
+                      CFE_EVS_EventType_INFORMATION,
+                      "NOOP command, Version %d.%d.%d.%d",
+                      DS_MAJOR_VERSION,
+                      DS_MINOR_VERSION,
+                      DS_REVISION,
+                      DS_MISSION_REV);
 
     return CFE_SUCCESS;
 }
@@ -122,8 +127,10 @@ CFE_Status_t DS_SetAppStateCmd(const DS_SetAppStateCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_ENADIS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid APP STATE command arg: app state = %d", DS_AppStateCmd->EnableState);
+        CFE_EVS_SendEvent(DS_ENADIS_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid APP STATE command arg: app state = %d",
+                          DS_AppStateCmd->EnableState);
     }
     else
     {
@@ -139,7 +146,9 @@ CFE_Status_t DS_SetAppStateCmd(const DS_SetAppStateCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_ENADIS_CMD_EID, CFE_EVS_EventType_INFORMATION, "APP STATE command: state = %d",
+        CFE_EVS_SendEvent(DS_ENADIS_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
+                          "APP STATE command: state = %d",
                           DS_AppStateCmd->EnableState);
     }
 
@@ -169,7 +178,8 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER FILE command arg: invalid messageID = 0x%08lX",
                           (unsigned long)CFE_SB_MsgIdToValue(DS_FilterFileCmd->MessageID));
     }
@@ -180,7 +190,8 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER FILE command arg: filter parameters index = %d",
                           DS_FilterFileCmd->FilterParmsIndex);
     }
@@ -191,8 +202,10 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid FILTER FILE command arg: file table index = %d", DS_FilterFileCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid FILTER FILE command arg: file table index = %d",
+                          DS_FilterFileCmd->FileTableIndex);
     }
     else if (DS_AppData.FilterTblPtr == (DS_FilterTable_t *)NULL)
     {
@@ -201,7 +214,8 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER FILE command: packet filter table is not loaded");
     }
     else
@@ -218,7 +232,8 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
             */
             DS_AppData.CmdRejectedCounter++;
 
-            CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(DS_FILE_CMD_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Invalid FILTER FILE command: Message ID 0x%08lX is not in filter table",
                               (unsigned long)CFE_SB_MsgIdToValue(DS_FilterFileCmd->MessageID));
         }
@@ -239,10 +254,13 @@ CFE_Status_t DS_SetFilterFileCmd(const DS_SetFilterFileCmd_t *BufPtr)
 
             DS_AppData.CmdAcceptedCounter++;
 
-            CFE_EVS_SendEvent(DS_FILE_CMD_EID, CFE_EVS_EventType_INFORMATION,
+            CFE_EVS_SendEvent(DS_FILE_CMD_EID,
+                              CFE_EVS_EventType_INFORMATION,
                               "FILTER FILE command: MID = 0x%08lX, index = %d, filter = %d, file = %d",
-                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterFileCmd->MessageID), (int)FilterTableIndex,
-                              DS_FilterFileCmd->FilterParmsIndex, DS_FilterFileCmd->FileTableIndex);
+                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterFileCmd->MessageID),
+                              (int)FilterTableIndex,
+                              DS_FilterFileCmd->FilterParmsIndex,
+                              DS_FilterFileCmd->FileTableIndex);
         }
     }
 
@@ -272,7 +290,8 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER TYPE command arg: invalid messageID = 0x%08lX",
                           (unsigned long)CFE_SB_MsgIdToValue(DS_FilterTypeCmd->MessageID));
     }
@@ -283,7 +302,8 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER TYPE command arg: filter parameters index = %d",
                           DS_FilterTypeCmd->FilterParmsIndex);
     }
@@ -294,8 +314,10 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid FILTER TYPE command arg: filter type = %d", DS_FilterTypeCmd->FilterType);
+        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid FILTER TYPE command arg: filter type = %d",
+                          DS_FilterTypeCmd->FilterType);
     }
     else if (DS_AppData.FilterTblPtr == (DS_FilterTable_t *)NULL)
     {
@@ -304,7 +326,8 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER TYPE command: packet filter table is not loaded");
     }
     else
@@ -321,7 +344,8 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
             */
             DS_AppData.CmdRejectedCounter++;
 
-            CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(DS_FTYPE_CMD_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Invalid FILTER TYPE command: Message ID 0x%08lX is not in filter table",
                               (unsigned long)CFE_SB_MsgIdToValue(DS_FilterTypeCmd->MessageID));
         }
@@ -342,10 +366,13 @@ CFE_Status_t DS_SetFilterTypeCmd(const DS_SetFilterTypeCmd_t *BufPtr)
 
             DS_AppData.CmdAcceptedCounter++;
 
-            CFE_EVS_SendEvent(DS_FTYPE_CMD_EID, CFE_EVS_EventType_INFORMATION,
+            CFE_EVS_SendEvent(DS_FTYPE_CMD_EID,
+                              CFE_EVS_EventType_INFORMATION,
                               "FILTER TYPE command: MID = 0x%08lX, index = %d, filter = %d, type = %d",
-                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterTypeCmd->MessageID), (int)FilterTableIndex,
-                              DS_FilterTypeCmd->FilterParmsIndex, DS_FilterTypeCmd->FilterType);
+                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterTypeCmd->MessageID),
+                              (int)FilterTableIndex,
+                              DS_FilterTypeCmd->FilterParmsIndex,
+                              DS_FilterTypeCmd->FilterType);
         }
     }
 
@@ -375,7 +402,8 @@ CFE_Status_t DS_SetFilterParmsCmd(const DS_SetFilterParmsCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER PARMS command arg: invalid messageID = 0x%08lX",
                           (unsigned long)CFE_SB_MsgIdToValue(DS_FilterParmsCmd->MessageID));
     }
@@ -386,21 +414,27 @@ CFE_Status_t DS_SetFilterParmsCmd(const DS_SetFilterParmsCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER PARMS command arg: filter parameters index = %d",
                           DS_FilterParmsCmd->FilterParmsIndex);
     }
-    else if (DS_TableVerifyParms(DS_FilterParmsCmd->Algorithm_N, DS_FilterParmsCmd->Algorithm_X,
-                                 DS_FilterParmsCmd->Algorithm_O) == false)
+    else if (DS_TableVerifyParms(DS_FilterParmsCmd->Algorithm_N,
+                                 DS_FilterParmsCmd->Algorithm_X,
+                                 DS_FilterParmsCmd->Algorithm_O)
+             == false)
     {
         /*
         ** Invalid packet filter algorithm parameters...
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid FILTER PARMS command arg: N = %d, X = %d, O = %d", DS_FilterParmsCmd->Algorithm_N,
-                          DS_FilterParmsCmd->Algorithm_X, DS_FilterParmsCmd->Algorithm_O);
+        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid FILTER PARMS command arg: N = %d, X = %d, O = %d",
+                          DS_FilterParmsCmd->Algorithm_N,
+                          DS_FilterParmsCmd->Algorithm_X,
+                          DS_FilterParmsCmd->Algorithm_O);
     }
     else if (DS_AppData.FilterTblPtr == (DS_FilterTable_t *)NULL)
     {
@@ -409,7 +443,8 @@ CFE_Status_t DS_SetFilterParmsCmd(const DS_SetFilterParmsCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid FILTER PARMS command: packet filter table is not loaded");
     }
     else
@@ -426,7 +461,8 @@ CFE_Status_t DS_SetFilterParmsCmd(const DS_SetFilterParmsCmd_t *BufPtr)
             */
             DS_AppData.CmdRejectedCounter++;
 
-            CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+            CFE_EVS_SendEvent(DS_PARMS_CMD_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
                               "Invalid FILTER PARMS command: Message ID 0x%08lX is not in filter table",
                               (unsigned long)CFE_SB_MsgIdToValue(DS_FilterParmsCmd->MessageID));
         }
@@ -449,10 +485,14 @@ CFE_Status_t DS_SetFilterParmsCmd(const DS_SetFilterParmsCmd_t *BufPtr)
 
             DS_AppData.CmdAcceptedCounter++;
 
-            CFE_EVS_SendEvent(DS_PARMS_CMD_EID, CFE_EVS_EventType_INFORMATION,
+            CFE_EVS_SendEvent(DS_PARMS_CMD_EID,
+                              CFE_EVS_EventType_INFORMATION,
                               "FILTER PARMS command: MID = 0x%08lX, index = %d, filter = %d, N = %d, X = %d, O = %d",
-                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterParmsCmd->MessageID), (int)FilterTableIndex,
-                              DS_FilterParmsCmd->FilterParmsIndex, pFilterParms->Algorithm_N, pFilterParms->Algorithm_X,
+                              (unsigned long)CFE_SB_MsgIdToValue(DS_FilterParmsCmd->MessageID),
+                              (int)FilterTableIndex,
+                              DS_FilterParmsCmd->FilterParmsIndex,
+                              pFilterParms->Algorithm_N,
+                              pFilterParms->Algorithm_X,
                               pFilterParms->Algorithm_O);
         }
     }
@@ -481,8 +521,10 @@ CFE_Status_t DS_SetDestTypeCmd(const DS_SetDestTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST TYPE command arg: file table index = %d", DS_DestTypeCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST TYPE command arg: file table index = %d",
+                          DS_DestTypeCmd->FileTableIndex);
     }
     else if (DS_TableVerifyType(DS_DestTypeCmd->FileNameType) == false)
     {
@@ -491,8 +533,10 @@ CFE_Status_t DS_SetDestTypeCmd(const DS_SetDestTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST TYPE command arg: filename type = %d", DS_DestTypeCmd->FileNameType);
+        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST TYPE command arg: filename type = %d",
+                          DS_DestTypeCmd->FileNameType);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -501,7 +545,8 @@ CFE_Status_t DS_SetDestTypeCmd(const DS_SetDestTypeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_NTYPE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST TYPE command: destination file table is not loaded");
     }
     else
@@ -519,9 +564,11 @@ CFE_Status_t DS_SetDestTypeCmd(const DS_SetDestTypeCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_NTYPE_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_NTYPE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST TYPE command: file table index = %d, filename type = %d",
-                          DS_DestTypeCmd->FileTableIndex, DS_DestTypeCmd->FileNameType);
+                          DS_DestTypeCmd->FileTableIndex,
+                          DS_DestTypeCmd->FileNameType);
     }
 
     return CFE_SUCCESS;
@@ -546,8 +593,10 @@ CFE_Status_t DS_SetDestStateCmd(const DS_SetDestStateCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST STATE command arg: file table index = %d", DS_DestStateCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST STATE command arg: file table index = %d",
+                          DS_DestStateCmd->FileTableIndex);
     }
     else if (DS_TableVerifyState(DS_DestStateCmd->EnableState) == false)
     {
@@ -556,8 +605,10 @@ CFE_Status_t DS_SetDestStateCmd(const DS_SetDestStateCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST STATE command arg: file state = %d", DS_DestStateCmd->EnableState);
+        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST STATE command arg: file state = %d",
+                          DS_DestStateCmd->EnableState);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -566,7 +617,8 @@ CFE_Status_t DS_SetDestStateCmd(const DS_SetDestStateCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_STATE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST STATE command: destination file table is not loaded");
     }
     else
@@ -584,8 +636,10 @@ CFE_Status_t DS_SetDestStateCmd(const DS_SetDestStateCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_STATE_CMD_EID, CFE_EVS_EventType_INFORMATION,
-                          "DEST STATE command: file table index = %d, file state = %d", DS_DestStateCmd->FileTableIndex,
+        CFE_EVS_SendEvent(DS_STATE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
+                          "DEST STATE command: file table index = %d, file state = %d",
+                          DS_DestStateCmd->FileTableIndex,
                           DS_DestStateCmd->EnableState);
     }
 
@@ -613,8 +667,10 @@ CFE_Status_t DS_SetDestPathCmd(const DS_SetDestPathCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PATH_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST PATH command arg: file table index = %d", (int)DS_DestPathCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_PATH_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST PATH command arg: file table index = %d",
+                          (int)DS_DestPathCmd->FileTableIndex);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -623,7 +679,8 @@ CFE_Status_t DS_SetDestPathCmd(const DS_SetDestPathCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_PATH_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_PATH_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST PATH command: destination file table is not loaded");
     }
     else
@@ -632,7 +689,10 @@ CFE_Status_t DS_SetDestPathCmd(const DS_SetDestPathCmd_t *BufPtr)
         ** Set path portion of destination table filename...
         */
         pDest = &DS_AppData.DestFileTblPtr->File[DS_DestPathCmd->FileTableIndex];
-        CFE_SB_MessageStringGet(pDest->Pathname, DS_DestPathCmd->Pathname, NULL, sizeof(pDest->Pathname),
+        CFE_SB_MessageStringGet(pDest->Pathname,
+                                DS_DestPathCmd->Pathname,
+                                NULL,
+                                sizeof(pDest->Pathname),
                                 sizeof(DS_DestPathCmd->Pathname));
 
         /*
@@ -642,9 +702,11 @@ CFE_Status_t DS_SetDestPathCmd(const DS_SetDestPathCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_PATH_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_PATH_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST PATH command: file table index = %d, pathname = '%s'",
-                          (int)DS_DestPathCmd->FileTableIndex, DS_DestPathCmd->Pathname);
+                          (int)DS_DestPathCmd->FileTableIndex,
+                          DS_DestPathCmd->Pathname);
     }
 
     return CFE_SUCCESS;
@@ -659,7 +721,7 @@ CFE_Status_t DS_SetDestPathCmd(const DS_SetDestPathCmd_t *BufPtr)
 CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
 {
     const DS_DestBase_Payload_t *DS_DestBaseCmd;
-    DS_DestFileEntry_t *         pDest = NULL;
+    DS_DestFileEntry_t          *pDest = NULL;
 
     DS_DestBaseCmd = DS_GET_CMD_PAYLOAD(BufPtr, DS_SetDestBaseCmd_t);
 
@@ -670,8 +732,10 @@ CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_BASE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST BASE command arg: file table index = %d", (int)DS_DestBaseCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_BASE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST BASE command arg: file table index = %d",
+                          (int)DS_DestBaseCmd->FileTableIndex);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -680,7 +744,8 @@ CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_BASE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_BASE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST BASE command: destination file table is not loaded");
     }
     else
@@ -689,7 +754,10 @@ CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
         ** Set base portion of destination table filename...
         */
         pDest = &DS_AppData.DestFileTblPtr->File[DS_DestBaseCmd->FileTableIndex];
-        CFE_SB_MessageStringGet(pDest->Basename, DS_DestBaseCmd->Basename, NULL, sizeof(pDest->Basename),
+        CFE_SB_MessageStringGet(pDest->Basename,
+                                DS_DestBaseCmd->Basename,
+                                NULL,
+                                sizeof(pDest->Basename),
                                 sizeof(DS_DestBaseCmd->Basename));
 
         /*
@@ -699,9 +767,11 @@ CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_BASE_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_BASE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST BASE command: file table index = %d, base filename = '%s'",
-                          (int)DS_DestBaseCmd->FileTableIndex, DS_DestBaseCmd->Basename);
+                          (int)DS_DestBaseCmd->FileTableIndex,
+                          DS_DestBaseCmd->Basename);
     }
 
     return CFE_SUCCESS;
@@ -716,7 +786,7 @@ CFE_Status_t DS_SetDestBaseCmd(const DS_SetDestBaseCmd_t *BufPtr)
 CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
 {
     const DS_DestExt_Payload_t *DS_DestExtCmd;
-    DS_DestFileEntry_t *        pDest = NULL;
+    DS_DestFileEntry_t         *pDest = NULL;
 
     DS_DestExtCmd = DS_GET_CMD_PAYLOAD(BufPtr, DS_SetDestExtCmd_t);
 
@@ -727,8 +797,10 @@ CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_EXT_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST EXT command arg: file table index = %d", (int)DS_DestExtCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_EXT_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST EXT command arg: file table index = %d",
+                          (int)DS_DestExtCmd->FileTableIndex);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -737,7 +809,8 @@ CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_EXT_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_EXT_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST EXT command: destination file table is not loaded");
     }
     else
@@ -746,7 +819,10 @@ CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
         ** Set extension portion of destination table filename...
         */
         pDest = &DS_AppData.DestFileTblPtr->File[DS_DestExtCmd->FileTableIndex];
-        CFE_SB_MessageStringGet(pDest->Extension, DS_DestExtCmd->Extension, NULL, sizeof(pDest->Extension),
+        CFE_SB_MessageStringGet(pDest->Extension,
+                                DS_DestExtCmd->Extension,
+                                NULL,
+                                sizeof(pDest->Extension),
                                 sizeof(DS_DestExtCmd->Extension));
 
         /*
@@ -756,9 +832,11 @@ CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_EXT_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_EXT_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST EXT command: file table index = %d, extension = '%s'",
-                          (int)DS_DestExtCmd->FileTableIndex, DS_DestExtCmd->Extension);
+                          (int)DS_DestExtCmd->FileTableIndex,
+                          DS_DestExtCmd->Extension);
     }
 
     return CFE_SUCCESS;
@@ -773,7 +851,7 @@ CFE_Status_t DS_SetDestExtCmd(const DS_SetDestExtCmd_t *BufPtr)
 CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
 {
     const DS_DestSize_Payload_t *DS_DestSizeCmd;
-    DS_DestFileEntry_t *         pDest = NULL;
+    DS_DestFileEntry_t          *pDest = NULL;
 
     DS_DestSizeCmd = DS_GET_CMD_PAYLOAD(BufPtr, DS_SetDestSizeCmd_t);
 
@@ -784,8 +862,10 @@ CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST SIZE command arg: file table index = %d", (int)DS_DestSizeCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST SIZE command arg: file table index = %d",
+                          (int)DS_DestSizeCmd->FileTableIndex);
     }
     else if (DS_TableVerifySize(DS_DestSizeCmd->MaxFileSize) == false)
     {
@@ -794,8 +874,10 @@ CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST SIZE command arg: size limit = %d", (int)DS_DestSizeCmd->MaxFileSize);
+        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST SIZE command arg: size limit = %d",
+                          (int)DS_DestSizeCmd->MaxFileSize);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -804,7 +886,8 @@ CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_SIZE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST SIZE command: destination file table is not loaded");
     }
     else
@@ -822,9 +905,11 @@ CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_SIZE_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_SIZE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST SIZE command: file table index = %d, size limit = %d",
-                          (int)DS_DestSizeCmd->FileTableIndex, (int)DS_DestSizeCmd->MaxFileSize);
+                          (int)DS_DestSizeCmd->FileTableIndex,
+                          (int)DS_DestSizeCmd->MaxFileSize);
     }
 
     return CFE_SUCCESS;
@@ -839,7 +924,7 @@ CFE_Status_t DS_SetDestSizeCmd(const DS_SetDestSizeCmd_t *BufPtr)
 CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
 {
     const DS_DestAge_Payload_t *DS_DestAgeCmd;
-    DS_DestFileEntry_t *        pDest = NULL;
+    DS_DestFileEntry_t         *pDest = NULL;
 
     DS_DestAgeCmd = DS_GET_CMD_PAYLOAD(BufPtr, DS_SetDestAgeCmd_t);
 
@@ -850,8 +935,10 @@ CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST AGE command arg: file table index = %d", (int)DS_DestAgeCmd->FileTableIndex);
+        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST AGE command arg: file table index = %d",
+                          (int)DS_DestAgeCmd->FileTableIndex);
     }
     else if (DS_TableVerifyAge(DS_DestAgeCmd->MaxFileAge) == false)
     {
@@ -860,7 +947,9 @@ CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID, CFE_EVS_EventType_ERROR, "Invalid DEST AGE command arg: age limit = %d",
+        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST AGE command arg: age limit = %d",
                           (int)DS_DestAgeCmd->MaxFileAge);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
@@ -870,7 +959,8 @@ CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_AGE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST AGE command: destination file table is not loaded");
     }
     else
@@ -888,8 +978,10 @@ CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_AGE_CMD_EID, CFE_EVS_EventType_INFORMATION,
-                          "DEST AGE command: file table index = %d, age limit = %d", (int)DS_DestAgeCmd->FileTableIndex,
+        CFE_EVS_SendEvent(DS_AGE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
+                          "DEST AGE command: file table index = %d, age limit = %d",
+                          (int)DS_DestAgeCmd->FileTableIndex,
                           (int)DS_DestAgeCmd->MaxFileAge);
     }
 
@@ -905,8 +997,8 @@ CFE_Status_t DS_SetDestAgeCmd(const DS_SetDestAgeCmd_t *BufPtr)
 CFE_Status_t DS_SetDestCountCmd(const DS_SetDestCountCmd_t *BufPtr)
 {
     const DS_DestCount_Payload_t *DS_DestCountCmd;
-    DS_AppFileStatus_t *          FileStatus = NULL;
-    DS_DestFileEntry_t *          DestFile   = NULL;
+    DS_AppFileStatus_t           *FileStatus = NULL;
+    DS_DestFileEntry_t           *DestFile   = NULL;
 
     DS_DestCountCmd = DS_GET_CMD_PAYLOAD(BufPtr, DS_SetDestCountCmd_t);
 
@@ -917,7 +1009,8 @@ CFE_Status_t DS_SetDestCountCmd(const DS_SetDestCountCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST COUNT command arg: file table index = %d",
                           (int)DS_DestCountCmd->FileTableIndex);
     }
@@ -928,8 +1021,10 @@ CFE_Status_t DS_SetDestCountCmd(const DS_SetDestCountCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST COUNT command arg: sequence count = %d", (int)DS_DestCountCmd->SequenceCount);
+        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST COUNT command arg: sequence count = %d",
+                          (int)DS_DestCountCmd->SequenceCount);
     }
     else if (DS_AppData.DestFileTblPtr == (DS_DestFileTable_t *)NULL)
     {
@@ -938,7 +1033,8 @@ CFE_Status_t DS_SetDestCountCmd(const DS_SetDestCountCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_SEQ_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid DEST COUNT command: destination file table is not loaded");
     }
     else
@@ -967,9 +1063,11 @@ CFE_Status_t DS_SetDestCountCmd(const DS_SetDestCountCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_SEQ_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_SEQ_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "DEST COUNT command: file table index = %d, sequence count = %d",
-                          (int)DS_DestCountCmd->FileTableIndex, (int)DS_DestCountCmd->SequenceCount);
+                          (int)DS_DestCountCmd->FileTableIndex,
+                          (int)DS_DestCountCmd->SequenceCount);
     }
 
     return CFE_SUCCESS;
@@ -994,8 +1092,10 @@ CFE_Status_t DS_CloseFileCmd(const DS_CloseFileCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_CLOSE_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid DEST CLOSE command arg: file table index = %d", (int)PayloadPtr->FileTableIndex);
+        CFE_EVS_SendEvent(DS_CLOSE_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Invalid DEST CLOSE command arg: file table index = %d",
+                          (int)PayloadPtr->FileTableIndex);
     }
     else
     {
@@ -1010,7 +1110,9 @@ CFE_Status_t DS_CloseFileCmd(const DS_CloseFileCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_CLOSE_CMD_EID, CFE_EVS_EventType_INFORMATION, "DEST CLOSE command: file table index = %d",
+        CFE_EVS_SendEvent(DS_CLOSE_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
+                          "DEST CLOSE command: file table index = %d",
                           (int)PayloadPtr->FileTableIndex);
     }
 
@@ -1055,7 +1157,7 @@ CFE_Status_t DS_CloseAllCmd(const DS_CloseAllCmd_t *BufPtr)
 CFE_Status_t DS_GetFileInfoCmd(const DS_GetFileInfoCmd_t *BufPtr)
 {
     DS_FileInfoPkt_t DS_FileInfoPkt;
-    DS_FileInfo_t *  FileInfoPtr;
+    DS_FileInfo_t   *FileInfoPtr;
     int32            i = 0;
 
     /*
@@ -1068,7 +1170,8 @@ CFE_Status_t DS_GetFileInfoCmd(const DS_GetFileInfoCmd_t *BufPtr)
     /*
     ** Initialize file info telemetry packet...
     */
-    CFE_MSG_Init(CFE_MSG_PTR(DS_FileInfoPkt.TelemetryHeader), CFE_SB_ValueToMsgId(DS_DIAG_TLM_MID),
+    CFE_MSG_Init(CFE_MSG_PTR(DS_FileInfoPkt.TelemetryHeader),
+                 CFE_SB_ValueToMsgId(DS_DIAG_TLM_MID),
                  sizeof(DS_FileInfoPkt_t));
 
     /*
@@ -1142,8 +1245,8 @@ CFE_Status_t DS_GetFileInfoCmd(const DS_GetFileInfoCmd_t *BufPtr)
 CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
 {
     const DS_AddRemoveMid_Payload_t *PayloadPtr;
-    DS_PacketEntry_t *               pPacketEntry     = NULL;
-    DS_FilterParms_t *               pFilterParms     = NULL;
+    DS_PacketEntry_t                *pPacketEntry     = NULL;
+    DS_FilterParms_t                *pFilterParms     = NULL;
     int32                            FilterTableIndex = 0;
     int32                            HashTableIndex   = 0;
     int32                            i                = 0;
@@ -1157,7 +1260,8 @@ CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid ADD MID command arg: invalid MID = 0x%08lX",
                           (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID));
     }
@@ -1168,7 +1272,8 @@ CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid ADD MID command: filter table is not loaded");
     }
     else if ((FilterTableIndex = DS_TableFindMsgID(PayloadPtr->MessageID)) != DS_INDEX_NONE)
@@ -1178,9 +1283,11 @@ CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid ADD MID command: MID = 0x%08lX is already in filter table at index = %d",
-                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID), (int)FilterTableIndex);
+                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID),
+                          (int)FilterTableIndex);
     }
     else if ((FilterTableIndex = DS_TableFindMsgID(CFE_SB_INVALID_MSG_ID)) == DS_INDEX_NONE)
     {
@@ -1189,7 +1296,8 @@ CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_ADD_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid ADD MID command: filter table is full");
     }
     else
@@ -1224,9 +1332,11 @@ CFE_Status_t DS_AddMidCmd(const DS_AddMidCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_ADD_MID_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_ADD_MID_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "ADD MID command: MID = 0x%08lX, filter index = %d, hash index = %d",
-                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID), (int)FilterTableIndex,
+                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID),
+                          (int)FilterTableIndex,
                           (int)HashTableIndex);
     }
 
@@ -1259,7 +1369,8 @@ CFE_Status_t DS_RemoveMidCmd(const DS_RemoveMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid REMOVE MID command arg: invalid MID = 0x%08lX",
                           (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID));
     }
@@ -1270,7 +1381,8 @@ CFE_Status_t DS_RemoveMidCmd(const DS_RemoveMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid REMOVE MID command: filter table is not loaded");
     }
     else if (FilterTableIndex == DS_INDEX_NONE)
@@ -1280,7 +1392,8 @@ CFE_Status_t DS_RemoveMidCmd(const DS_RemoveMidCmd_t *BufPtr)
         */
         DS_AppData.CmdRejectedCounter++;
 
-        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
                           "Invalid REMOVE MID command: MID = 0x%08lX is not in filter table",
                           (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID));
     }
@@ -1320,9 +1433,11 @@ CFE_Status_t DS_RemoveMidCmd(const DS_RemoveMidCmd_t *BufPtr)
 
         DS_AppData.CmdAcceptedCounter++;
 
-        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_EID, CFE_EVS_EventType_INFORMATION,
+        CFE_EVS_SendEvent(DS_REMOVE_MID_CMD_EID,
+                          CFE_EVS_EventType_INFORMATION,
                           "REMOVE MID command: MID = 0x%08lX, filter index = %d, hash index = %d",
-                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID), (int)FilterTableIndex,
+                          (unsigned long)CFE_SB_MsgIdToValue(PayloadPtr->MessageID),
+                          (int)FilterTableIndex,
                           (int)HashTableIndex);
     }
 
@@ -1340,7 +1455,7 @@ CFE_Status_t DS_SendHkCmd(const DS_SendHkCmd_t *BufPtr)
     DS_HkPacket_t  HkPacket;
     int32          i                                              = 0;
     CFE_Status_t   Status                                         = 0;
-    char           FilterTblName[CFE_MISSION_TBL_MAX_NAME_LENGTH] = {0};
+    char           FilterTblName[CFE_MISSION_TBL_MAX_NAME_LENGTH] = { 0 };
     CFE_TBL_Info_t FilterTblInfo;
 
     DS_HkTlm_Payload_t *PayloadPtr;
@@ -1423,8 +1538,10 @@ CFE_Status_t DS_SendHkCmd(const DS_SendHkCmd_t *BufPtr)
         {
             /* If the filter table name is invalid, send an event and erase any
              * stale/misleading filename from the HK packet */
-            CFE_EVS_SendEvent(DS_APPHK_FILTER_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Invalid filter tbl name in DS_SendHkCmd. Name=%s, Err=0x%08X", FilterTblName,
+            CFE_EVS_SendEvent(DS_APPHK_FILTER_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Invalid filter tbl name in DS_SendHkCmd. Name=%s, Err=0x%08X",
+                              FilterTblName,
                               (unsigned int)Status);
 
             memset(PayloadPtr->FilterTblFilename, 0, sizeof(PayloadPtr->FilterTblFilename));
@@ -1434,8 +1551,10 @@ CFE_Status_t DS_SendHkCmd(const DS_SendHkCmd_t *BufPtr)
     {
         /* If the filter table name couldn't be copied, send an event and erase
          * any stale/misleading filename from the HK packet */
-        CFE_EVS_SendEvent(DS_APPHK_FILTER_TBL_PRINT_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Filter tbl name copy fail in DS_SendHkCmd. Err=%d", (int)Status);
+        CFE_EVS_SendEvent(DS_APPHK_FILTER_TBL_PRINT_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Filter tbl name copy fail in DS_SendHkCmd. Err=%d",
+                          (int)Status);
 
         memset(PayloadPtr->FilterTblFilename, 0, sizeof(PayloadPtr->FilterTblFilename));
     }

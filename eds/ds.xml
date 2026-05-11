@@ -73,7 +73,7 @@
         <EnumerationList>
           <Enumeration label="UNUSED" value="0" shortDescription="Unused entries in DS tables" />
           <Enumeration label="DISABLED" value="0" shortDescription="Disabled State" />
-          <Enumeration label="ENABLED" value="2" shortDescription="Enabled State" />
+          <Enumeration label="ENABLED" value="1" shortDescription="Enabled State" />
         </EnumerationList>
         <IntegerDataEncoding sizeInBits="16" encoding="unsigned" />
       </EnumeratedDataType>
@@ -153,7 +153,6 @@
       <ContainerDataType name="AppState_Payload" shortDescription="Set Ena/Dis State For DS Application">
         <EntryList>
           <Entry name="EnableState" type="EnableState" shortDescription="Application enable/disable state" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Padding on 32-bit boundaries" />
         </EntryList>
       </ContainerDataType>
 
@@ -200,7 +199,6 @@
       <ContainerDataType name="DestPath_Payload" shortDescription="Set Path Portion Of Filename For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="Pathname" type="PathnameString" shortDescription="Path portion of filename" />
         </EntryList>
       </ContainerDataType>
@@ -208,7 +206,6 @@
       <ContainerDataType name="DestBase_Payload" shortDescription="Set Base Portion Of Filename For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="Basename" type="BasenameString" shortDescription="Base portion of filename" />
         </EntryList>
       </ContainerDataType>
@@ -216,7 +213,6 @@
       <ContainerDataType name="DestExt_Payload" shortDescription="Set Extension Portion Of Filename For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="Extension" type="ExtensionString" shortDescription="Path portion of filename" />
         </EntryList>
       </ContainerDataType>
@@ -224,7 +220,7 @@
       <ContainerDataType name="DestSize_Payload" shortDescription="Set Max File Size For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
+          <PaddingEntry sizeInBits="16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="MaxFileSize" type="BASE_TYPES/uint32" shortDescription="Max file size (bytes) before re-open" />
         </EntryList>
       </ContainerDataType>
@@ -232,7 +228,7 @@
       <ContainerDataType name="DestAge_Payload" shortDescription="Set Max File Age For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
+          <PaddingEntry sizeInBits="16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="MaxFileAge" type="BASE_TYPES/uint32" shortDescription="Max file age (seconds)" />
         </EntryList>
       </ContainerDataType>
@@ -240,7 +236,7 @@
       <ContainerDataType name="DestCount_Payload" shortDescription="Set Sequence Portion Of Filename For Destination File Table Entry">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
+          <PaddingEntry sizeInBits="16" shortDescription="Structure Padding on 32-bit boundaries" />
           <Entry name="SequenceCount" type="BASE_TYPES/uint32" shortDescription="Sequence count portion of filename" />
         </EntryList>
       </ContainerDataType>
@@ -248,11 +244,7 @@
       <ContainerDataType name="CloseFile_Payload" shortDescription="Close Destination File">
         <EntryList>
           <Entry name="FileTableIndex" type="BASE_TYPES/uint16" shortDescription="Index into Destination File Table" />
-          <Entry name="Padding" type="BASE_TYPES/uint16" shortDescription="Structure Padding on 32-bit boundaries" />
         </EntryList>
-      </ContainerDataType>
-
-      <ContainerDataType name="CloseAllGetFileInfo_Payload" shortDescription="Close all dest files and get file info commands">
       </ContainerDataType>
 
       <ContainerDataType name="AddRemoveMid_Payload" shortDescription="Add and remove message ID from Packet Filter Table commands">
@@ -881,9 +873,6 @@
       <ConstraintSet>
         <ValueConstraint entry="Sec.FunctionCode" value="15" />
       </ConstraintSet>
-      <EntryList>
-        <Entry type="CloseAllGetFileInfo_Payload" name="Payload" />
-      </EntryList>
     </ContainerDataType>
 
     <ContainerDataType name="AddMidCmd" baseType="CMD">
@@ -925,43 +914,6 @@
       </EntryList>
     </ContainerDataType>
 
-    <ContainerDataType name="CloseAllCmd" baseType="CMD">
-      <LongDescription>
-       \fmcmd Close All Destination Files
-
-       \par Description
-            This command will close all open Destination Files.
-            - NOTE: Using this command may incur a performance hit based upon
-                    the number and size of the files being closed.
-
-       \par Command Structure
-            #DS_CloseAllCmd_t
-
-       \par Command Verification
-            Evidence of success may be found in the following telemetry:
-            - #DS_HkPacket_t.CmdAcceptedCounter will increment
-            - The #DS_CLOSE_ALL_CMD_EID debug event message will be sent
-
-       \par Error Conditions
-            This command can fail for the following reasons:
-            - Invalid command packet length
-            - Destination file table is not currently loaded
-
-            Evidence of failure may be found in the following telemetry:
-            - #DS_HkPacket_t.CmdRejectedCounter will increment
-            - The #DS_CLOSE_ALL_CMD_ERR_EID error event message will be sent
-
-       \par Criticality
-            None
-      </LongDescription>
-      <ConstraintSet>
-        <ValueConstraint entry="Sec.FunctionCode" value="17" />
-      </ConstraintSet>
-      <EntryList>
-        <Entry type="CloseAllGetFileInfo_Payload" name="Payload" />
-      </EntryList>
-    </ContainerDataType>
-
     <ContainerDataType name="RemoveMidCmd" baseType="CMD">
       <LongDescription>
        \fmcmd Remove Message ID from Packet Filter Table
@@ -993,13 +945,47 @@
             None
       </LongDescription>
       <ConstraintSet>
-        <ValueConstraint entry="Sec.FunctionCode" value="18" />
+        <ValueConstraint entry="Sec.FunctionCode" value="17" />
       </ConstraintSet>
       <EntryList>
         <Entry type="AddRemoveMid_Payload" name="Payload" />
       </EntryList>
     </ContainerDataType>
     </DataTypeSet>
+
+    <ContainerDataType name="CloseAllCmd" baseType="CMD">
+      <LongDescription>
+       \fmcmd Close All Destination Files
+
+       \par Description
+            This command will close all open Destination Files.
+            - NOTE: Using this command may incur a performance hit based upon
+                    the number and size of the files being closed.
+
+       \par Command Structure
+            #DS_CloseAllCmd_t
+
+       \par Command Verification
+            Evidence of success may be found in the following telemetry:
+            - #DS_HkPacket_t.CmdAcceptedCounter will increment
+            - The #DS_CLOSE_ALL_CMD_EID debug event message will be sent
+
+       \par Error Conditions
+            This command can fail for the following reasons:
+            - Invalid command packet length
+            - Destination file table is not currently loaded
+
+            Evidence of failure may be found in the following telemetry:
+            - #DS_HkPacket_t.CmdRejectedCounter will increment
+            - The #DS_CLOSE_ALL_CMD_ERR_EID error event message will be sent
+
+       \par Criticality
+            None
+      </LongDescription>
+      <ConstraintSet>
+        <ValueConstraint entry="Sec.FunctionCode" value="18" />
+      </ConstraintSet>
+    </ContainerDataType>
 
     <ComponentSet>
       <Component name="Application">

@@ -63,7 +63,6 @@ CFE_Status_t DS_TableCreateCDS(void)
  */
 void DS_TableCreateHash(void)
 {
-
     UT_GenStub_Execute(DS_TableCreateHash, Basic, NULL);
 }
 
@@ -137,7 +136,6 @@ CFE_Status_t DS_TableInit(void)
  */
 void DS_TableManageDestFile(void)
 {
-
     UT_GenStub_Execute(DS_TableManageDestFile, Basic, NULL);
 }
 
@@ -148,7 +146,6 @@ void DS_TableManageDestFile(void)
  */
 void DS_TableManageFilter(void)
 {
-
     UT_GenStub_Execute(DS_TableManageFilter, Basic, NULL);
 }
 
@@ -159,7 +156,6 @@ void DS_TableManageFilter(void)
  */
 void DS_TableSubscribe(void)
 {
-
     UT_GenStub_Execute(DS_TableSubscribe, Basic, NULL);
 }
 
@@ -170,7 +166,6 @@ void DS_TableSubscribe(void)
  */
 void DS_TableUnsubscribe(void)
 {
-
     UT_GenStub_Execute(DS_TableUnsubscribe, Basic, NULL);
 }
 
@@ -181,7 +176,6 @@ void DS_TableUnsubscribe(void)
  */
 void DS_TableUpdateCDS(void)
 {
-
     UT_GenStub_Execute(DS_TableUpdateCDS, Basic, NULL);
 }
 

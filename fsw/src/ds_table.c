@@ -67,8 +67,11 @@ CFE_Status_t DS_TableInit(void)
     **   along until an external influence (ground or RTS) can manage
     **   to get both tables loaded.
     */
-    Result1 = CFE_TBL_Register(&DS_AppData.DestFileTblHandle, DS_DESTINATION_TBL_NAME, sizeof(DS_DestFileTable_t),
-                               TableRegisterFlags, (CFE_TBL_CallbackFuncPtr_t)DS_TableVerifyDestFile);
+    Result1 = CFE_TBL_Register(&DS_AppData.DestFileTblHandle,
+                               DS_DESTINATION_TBL_NAME,
+                               sizeof(DS_DestFileTable_t),
+                               TableRegisterFlags,
+                               (CFE_TBL_CallbackFuncPtr_t)DS_TableVerifyDestFile);
 
     if (Result1 == CFE_TBL_INFO_RECOVERED_TBL)
     {
@@ -77,7 +80,8 @@ CFE_Status_t DS_TableInit(void)
         */
         NeedToLoadDestTable = false;
 
-        CFE_EVS_SendEvent(DS_INIT_TBL_CDS_EID, CFE_EVS_EventType_DEBUG,
+        CFE_EVS_SendEvent(DS_INIT_TBL_CDS_EID,
+                          CFE_EVS_EventType_DEBUG,
                           "Destination File Table data restored from CDS");
         /*
         ** This is not an error so clear the result value for later tests
@@ -96,14 +100,19 @@ CFE_Status_t DS_TableInit(void)
         /*
         ** cFE did not register the table - we cannot continue
         */
-        CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Unable to register Destination File Table: Error = 0x%08X", (unsigned int)Result1);
+        CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Unable to register Destination File Table: Error = 0x%08X",
+                          (unsigned int)Result1);
     }
 
     if (Result1 == CFE_SUCCESS)
     {
-        Result1 = CFE_TBL_Register(&DS_AppData.FilterTblHandle, DS_FILTER_TBL_NAME, sizeof(DS_FilterTable_t),
-                                   TableRegisterFlags, (CFE_TBL_CallbackFuncPtr_t)DS_TableVerifyFilter);
+        Result1 = CFE_TBL_Register(&DS_AppData.FilterTblHandle,
+                                   DS_FILTER_TBL_NAME,
+                                   sizeof(DS_FilterTable_t),
+                                   TableRegisterFlags,
+                                   (CFE_TBL_CallbackFuncPtr_t)DS_TableVerifyFilter);
 
         if (Result1 == CFE_TBL_INFO_RECOVERED_TBL)
         {
@@ -130,8 +139,10 @@ CFE_Status_t DS_TableInit(void)
             /*
             ** cFE did not register the table - we cannot continue
             */
-            CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Unable to register Filter Table: Error = 0x%08X", (unsigned int)Result1);
+            CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Unable to register Filter Table: Error = 0x%08X",
+                              (unsigned int)Result1);
         }
     }
 
@@ -148,9 +159,11 @@ CFE_Status_t DS_TableInit(void)
 
             if (Result2 != CFE_SUCCESS)
             {
-                CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
+                CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID,
+                                  CFE_EVS_EventType_ERROR,
                                   "Unable to load default Destination File Table: Filename = '%s', Error = 0x%08X",
-                                  DS_DEF_DEST_FILENAME, (unsigned int)Result2);
+                                  DS_DEF_DEST_FILENAME,
+                                  (unsigned int)Result2);
             }
         }
 
@@ -160,9 +173,11 @@ CFE_Status_t DS_TableInit(void)
 
             if (Result2 != CFE_SUCCESS)
             {
-                CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
+                CFE_EVS_SendEvent(DS_INIT_TBL_ERR_EID,
+                                  CFE_EVS_EventType_ERROR,
                                   "Unable to load default Filter Table: Filename = '%s', Error = 0x%08X",
-                                  DS_DEF_FILTER_FILENAME, (unsigned int)Result2);
+                                  DS_DEF_FILTER_FILENAME,
+                                  (unsigned int)Result2);
             }
         }
 
@@ -427,9 +442,12 @@ CFE_Status_t DS_TableVerifyDestFile(const void *TableData)
     /*
     ** Note that totals include each table entry plus the descriptor
     */
-    CFE_EVS_SendEvent(DS_FIL_TBL_EID, CFE_EVS_EventType_INFORMATION,
-                      "Destination file table verify results: good entries = %d, bad = %d, unused = %d", (int)CountGood,
-                      (int)CountBad, (int)CountUnused);
+    CFE_EVS_SendEvent(DS_FIL_TBL_EID,
+                      CFE_EVS_EventType_INFORMATION,
+                      "Destination file table verify results: good entries = %d, bad = %d, unused = %d",
+                      (int)CountGood,
+                      (int)CountBad,
+                      (int)CountUnused);
 
     return Result;
 }
@@ -459,8 +477,12 @@ bool DS_TableVerifyDestFileEntry(DS_DestFileEntry_t *DestFileEntry, uint8 TableI
     {
         if (ErrorCount == 0)
         {
-            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID, CFE_EVS_EventType_ERROR, "%s index = %d, filename type = %d",
-                              CommonErrorText, TableIndex, DestFileEntry->FileNameType);
+            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "%s index = %d, filename type = %d",
+                              CommonErrorText,
+                              TableIndex,
+                              DestFileEntry->FileNameType);
         }
         Result = false;
     }
@@ -468,8 +490,12 @@ bool DS_TableVerifyDestFileEntry(DS_DestFileEntry_t *DestFileEntry, uint8 TableI
     {
         if (ErrorCount == 0)
         {
-            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID, CFE_EVS_EventType_ERROR, "%s index = %d, file enable state = %d",
-                              CommonErrorText, TableIndex, DestFileEntry->EnableState);
+            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "%s index = %d, file enable state = %d",
+                              CommonErrorText,
+                              TableIndex,
+                              DestFileEntry->EnableState);
         }
         Result = false;
     }
@@ -477,8 +503,12 @@ bool DS_TableVerifyDestFileEntry(DS_DestFileEntry_t *DestFileEntry, uint8 TableI
     {
         if (ErrorCount == 0)
         {
-            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID, CFE_EVS_EventType_ERROR, "%s index = %d, max file size = %d",
-                              CommonErrorText, (int)TableIndex, (int)DestFileEntry->MaxFileSize);
+            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "%s index = %d, max file size = %d",
+                              CommonErrorText,
+                              (int)TableIndex,
+                              (int)DestFileEntry->MaxFileSize);
         }
         Result = false;
     }
@@ -486,8 +516,12 @@ bool DS_TableVerifyDestFileEntry(DS_DestFileEntry_t *DestFileEntry, uint8 TableI
     {
         if (ErrorCount == 0)
         {
-            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID, CFE_EVS_EventType_ERROR, "%s index = %d, max file age = %d",
-                              CommonErrorText, (int)TableIndex, (int)DestFileEntry->MaxFileAge);
+            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "%s index = %d, max file age = %d",
+                              CommonErrorText,
+                              (int)TableIndex,
+                              (int)DestFileEntry->MaxFileAge);
         }
         Result = false;
     }
@@ -495,8 +529,12 @@ bool DS_TableVerifyDestFileEntry(DS_DestFileEntry_t *DestFileEntry, uint8 TableI
     {
         if (ErrorCount == 0)
         {
-            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID, CFE_EVS_EventType_ERROR, "%s index = %d, sequence count = %d",
-                              CommonErrorText, (int)TableIndex, (int)DestFileEntry->SequenceCount);
+            CFE_EVS_SendEvent(DS_FIL_TBL_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "%s index = %d, sequence count = %d",
+                              CommonErrorText,
+                              (int)TableIndex,
+                              (int)DestFileEntry->SequenceCount);
         }
         Result = false;
     }
@@ -549,9 +587,12 @@ CFE_Status_t DS_TableVerifyFilter(const void *TableData)
     /*
     ** Note that totals include each table entry plus the descriptor
     */
-    CFE_EVS_SendEvent(DS_FLT_TBL_EID, CFE_EVS_EventType_INFORMATION,
-                      "Filter table verify results: good entries = %d, bad = %d, unused = %d", (int)CountGood,
-                      (int)CountBad, (int)CountUnused);
+    CFE_EVS_SendEvent(DS_FLT_TBL_EID,
+                      CFE_EVS_EventType_INFORMATION,
+                      "Filter table verify results: good entries = %d, bad = %d, unused = %d",
+                      (int)CountGood,
+                      (int)CountBad,
+                      (int)CountUnused);
 
     return Result;
 }
@@ -564,7 +605,7 @@ CFE_Status_t DS_TableVerifyFilter(const void *TableData)
 
 bool DS_TableVerifyFilterEntry(DS_PacketEntry_t *PacketEntry, int32 TableIndex, int32 ErrorCount)
 {
-    const char *      CommonErrorText = "Filter table verify err:";
+    const char       *CommonErrorText = "Filter table verify err:";
     DS_FilterParms_t *FilterParms;
     bool              Result = true;
     int32             i      = 0;
@@ -596,10 +637,14 @@ bool DS_TableVerifyFilterEntry(DS_PacketEntry_t *PacketEntry, int32 TableIndex, 
             {
                 if (ErrorCount == 0)
                 {
-                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
+                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID,
+                                      CFE_EVS_EventType_ERROR,
                                       "%s MID = 0x%08lX, index = %d, filter = %d, file table index = %d",
-                                      CommonErrorText, (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID),
-                                      (int)TableIndex, (int)i, FilterParms->FileTableIndex);
+                                      CommonErrorText,
+                                      (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID),
+                                      (int)TableIndex,
+                                      (int)i,
+                                      FilterParms->FileTableIndex);
                 }
                 Result = false;
             }
@@ -607,22 +652,31 @@ bool DS_TableVerifyFilterEntry(DS_PacketEntry_t *PacketEntry, int32 TableIndex, 
             {
                 if (ErrorCount == 0)
                 {
-                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
-                                      "%s MID = 0x%08lX, index = %d, filter = %d, filter type = %d", CommonErrorText,
-                                      (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID), (int)TableIndex,
-                                      (int)i, FilterParms->FilterType);
+                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID,
+                                      CFE_EVS_EventType_ERROR,
+                                      "%s MID = 0x%08lX, index = %d, filter = %d, filter type = %d",
+                                      CommonErrorText,
+                                      (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID),
+                                      (int)TableIndex,
+                                      (int)i,
+                                      FilterParms->FilterType);
                 }
                 Result = false;
             }
-            else if (DS_TableVerifyParms(FilterParms->Algorithm_N, FilterParms->Algorithm_X,
-                                         FilterParms->Algorithm_O) == false)
+            else if (DS_TableVerifyParms(FilterParms->Algorithm_N, FilterParms->Algorithm_X, FilterParms->Algorithm_O)
+                     == false)
             {
                 if (ErrorCount == 0)
                 {
-                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID, CFE_EVS_EventType_ERROR,
+                    CFE_EVS_SendEvent(DS_FLT_TBL_ERR_EID,
+                                      CFE_EVS_EventType_ERROR,
                                       "%s MID = 0x%08lX, index = %d, filter = %d, filter parms N = %d, X = %d, O = %d",
-                                      CommonErrorText, (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID),
-                                      (int)TableIndex, (int)i, FilterParms->Algorithm_N, FilterParms->Algorithm_X,
+                                      CommonErrorText,
+                                      (unsigned long)CFE_SB_MsgIdToValue(PacketEntry->MessageID),
+                                      (int)TableIndex,
+                                      (int)i,
+                                      FilterParms->Algorithm_N,
+                                      FilterParms->Algorithm_X,
                                       FilterParms->Algorithm_O);
                 }
                 Result = false;
@@ -823,8 +877,8 @@ void DS_TableSubscribe(void)
         /*
         ** Already subscribe to DS command packets...
         */
-        if (CFE_SB_IsValidMsgId(MessageID) && (CFE_SB_MsgIdToValue(MessageID) != DS_CMD_MID) &&
-            (CFE_SB_MsgIdToValue(MessageID) != DS_SEND_HK_MID))
+        if (CFE_SB_IsValidMsgId(MessageID) && (CFE_SB_MsgIdToValue(MessageID) != DS_CMD_MID)
+            && (CFE_SB_MsgIdToValue(MessageID) != DS_SEND_HK_MID))
         {
             CFE_SB_SubscribeEx(MessageID, DS_AppData.CmdPipe, CFE_SB_DEFAULT_QOS, DS_PER_PACKET_PIPE_LIMIT);
         }
@@ -855,8 +909,8 @@ void DS_TableUnsubscribe(void)
         /*
         ** Do not un-subscribe to unused or DS command packets...
         */
-        if (CFE_SB_IsValidMsgId(MessageID) && (CFE_SB_MsgIdToValue(MessageID) != DS_CMD_MID) &&
-            (CFE_SB_MsgIdToValue(MessageID) != DS_SEND_HK_MID))
+        if (CFE_SB_IsValidMsgId(MessageID) && (CFE_SB_MsgIdToValue(MessageID) != DS_CMD_MID)
+            && (CFE_SB_MsgIdToValue(MessageID) != DS_SEND_HK_MID))
         {
             CFE_SB_Unsubscribe(MessageID, DS_AppData.CmdPipe);
         }
@@ -872,7 +926,7 @@ void DS_TableUnsubscribe(void)
 CFE_Status_t DS_TableCreateCDS(void)
 {
     /* Store file sequence counts and task ena/dis state in CDS */
-    uint32       DataStoreBuffer[DS_DEST_FILE_CNT + 1] = {0};
+    uint32       DataStoreBuffer[DS_DEST_FILE_CNT + 1] = { 0 };
     CFE_Status_t Result;
     int32        i = 0;
 
@@ -924,7 +978,9 @@ CFE_Status_t DS_TableCreateCDS(void)
         */
         DS_AppData.DataStoreHandle = CFE_ES_CDS_BAD_HANDLE;
 
-        CFE_EVS_SendEvent(DS_INIT_CDS_ERR_EID, CFE_EVS_EventType_ERROR, "Critical Data Store access error = 0x%08X",
+        CFE_EVS_SendEvent(DS_INIT_CDS_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Critical Data Store access error = 0x%08X",
                           (unsigned int)Result);
         /*
         ** CDS errors are not fatal - DS can still run...
@@ -944,7 +1000,7 @@ CFE_Status_t DS_TableCreateCDS(void)
 void DS_TableUpdateCDS(void)
 {
     /* Store file sequence counts and task ena/dis state in CDS */
-    uint32       DataStoreBuffer[DS_DEST_FILE_CNT + 1] = {0};
+    uint32       DataStoreBuffer[DS_DEST_FILE_CNT + 1] = { 0 };
     CFE_Status_t Result;
     int32        i = 0;
 
@@ -974,7 +1030,9 @@ void DS_TableUpdateCDS(void)
 
         if (Result != CFE_SUCCESS)
         {
-            CFE_EVS_SendEvent(DS_INIT_CDS_ERR_EID, CFE_EVS_EventType_ERROR, "Critical Data Store access error = 0x%08X",
+            CFE_EVS_SendEvent(DS_INIT_CDS_ERR_EID,
+                              CFE_EVS_EventType_ERROR,
+                              "Critical Data Store access error = 0x%08X",
                               (unsigned int)Result);
             /*
             ** CDS is broken - prevent further errors...
@@ -1102,7 +1160,7 @@ int32 DS_TableAddMsgID(CFE_SB_MsgId_t MessageID, int32 FilterIndex)
 int32 DS_TableFindMsgID(CFE_SB_MsgId_t MessageID)
 {
     DS_PacketEntry_t *FilterPackets    = NULL;
-    DS_HashLink_t *   HashLink         = NULL;
+    DS_HashLink_t    *HashLink         = NULL;
     int32             HashTableIndex   = 0;
     int32             FilterTableIndex = 0;
 

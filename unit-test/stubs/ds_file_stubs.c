@@ -182,8 +182,11 @@ void DS_FileWriteHeader(int32 FileIndex)
  * Generated stub function for DS_IsPacketFiltered()
  * ----------------------------------------------------
  */
-bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr, uint16 FilterType, uint16 Algorithm_N, uint16 Algorithm_X,
-                         uint16 Algorithm_O)
+bool DS_IsPacketFiltered(CFE_MSG_Message_t *MessagePtr,
+                         uint16             FilterType,
+                         uint16             Algorithm_N,
+                         uint16             Algorithm_X,
+                         uint16             Algorithm_O)
 {
     UT_GenStub_SetupReturnBuffer(DS_IsPacketFiltered, bool);
 

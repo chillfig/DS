@@ -117,9 +117,6 @@ void DS_SetAppStateCmd_Test_Nominal(void)
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_ENADIS_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetAppStateCmd_t), "DS_AppStateCmd_t is 32-bit aligned");
 }
 
 void DS_SetAppStateCmd_Test_InvalidAppState(void)
@@ -161,8 +158,8 @@ void DS_SetFilterFileCmd_Test_Nominal(void)
     UtAssert_UINT32_EQ(DS_AppData.CmdAcceptedCounter, 1);
 
     UtAssert_True(
-        DS_AppData.FilterTblPtr->Packet[forced_FilterTableIndex].Filter[CmdPayload->FilterParmsIndex].FileTableIndex ==
-            CmdPayload->FileTableIndex,
+        DS_AppData.FilterTblPtr->Packet[forced_FilterTableIndex].Filter[CmdPayload->FilterParmsIndex].FileTableIndex
+            == CmdPayload->FileTableIndex,
         "DS_AppData.FilterTblPtr->Packet[forced_FilterTableIndex].Filter[CmdPayload->"
         "FilterParmsIndex].FileTableIndex == CmdPayload->FileTableIndex");
 
@@ -726,17 +723,16 @@ void DS_SetDestPathCmd_Test_Nominal(void)
     /* Verify results */
     UtAssert_UINT32_EQ(DS_AppData.CmdAcceptedCounter, 1);
 
-    UtAssert_True(strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Pathname, "pathname",
-                          sizeof(DS_AppData.DestFileTblPtr->File[0].Pathname)) == 0,
+    UtAssert_True(strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Pathname,
+                          "pathname",
+                          sizeof(DS_AppData.DestFileTblPtr->File[0].Pathname))
+                      == 0,
                   "strncmp (DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Pathname, "
                   "'pathname', sizeof(DestFileTable.File[0].Pathname) - 1) == 0");
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_PATH_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestPathCmd_t), "DS_DestPathCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestPathCmd_Test_InvalidFileTableIndex(void)
@@ -793,17 +789,16 @@ void DS_SetDestBaseCmd_Test_Nominal(void)
     /* Verify results */
     UtAssert_UINT32_EQ(DS_AppData.CmdAcceptedCounter, 1);
 
-    UtAssert_True(strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Basename, "base",
-                          sizeof(DS_AppData.DestFileTblPtr->File[0].Basename)) == 0,
+    UtAssert_True(strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Basename,
+                          "base",
+                          sizeof(DS_AppData.DestFileTblPtr->File[0].Basename))
+                      == 0,
                   "strncmp (DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Basename, 'base', "
                   "sizeof(DestFileTable.File[0].Basename)) == 0");
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_BASE_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestBaseCmd_t), "DS_DestBaseCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestBaseCmd_Test_InvalidFileTableIndex(void)
@@ -860,18 +855,16 @@ void DS_SetDestExtCmd_Test_Nominal(void)
     /* Verify results */
     UtAssert_UINT32_EQ(DS_AppData.CmdAcceptedCounter, 1);
 
-    UtAssert_True(strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Extension, "txt",
-                          DS_EXTENSION_BUFSIZE) == 0,
-                  "strncmp (DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Extension, 'txt', "
-                  "DS_EXTENSION_BUFSIZE) == "
-                  "0");
+    UtAssert_True(
+        strncmp(DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Extension, "txt", DS_EXTENSION_BUFSIZE)
+            == 0,
+        "strncmp (DS_AppData.DestFileTblPtr->File[CmdPayload->FileTableIndex].Extension, 'txt', "
+        "DS_EXTENSION_BUFSIZE) == "
+        "0");
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventID, DS_EXT_CMD_EID);
     UtAssert_INT32_EQ(context_CFE_EVS_SendEvent[0].EventType, CFE_EVS_EventType_INFORMATION);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_SetDestExtCmd_t), "DS_DestExtCmd_t is 32-bit aligned");
 }
 
 void DS_SetDestExtCmd_Test_InvalidFileTableIndex(void)
@@ -1211,9 +1204,6 @@ void DS_CloseFileCmd_Test_Nominal(void)
 
     UtAssert_STUB_COUNT(DS_FileUpdateHeader, 1);
     UtAssert_STUB_COUNT(DS_FileCloseDest, 1);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_CloseFileCmd_t), "DS_CloseFileCmd_t is 32-bit aligned");
 }
 
 void DS_CloseFileCmd_Test_NominalAlreadyClosed(void)
@@ -1244,9 +1234,6 @@ void DS_CloseFileCmd_Test_NominalAlreadyClosed(void)
 
     UtAssert_STUB_COUNT(DS_FileUpdateHeader, 0);
     UtAssert_STUB_COUNT(DS_FileCloseDest, 0);
-
-    /* Verify command struct size minus header is at least explicitly padded to 32-bit boundaries */
-    UtAssert_True(CMD_STRUCT_DATA_IS_32_ALIGNED(DS_CloseFileCmd_t), "DS_CloseFileCmd_t is 32-bit aligned");
 }
 
 void DS_CloseFileCmd_Test_InvalidFileTableIndex(void)
@@ -1733,132 +1720,226 @@ void UtTest_Setup(void)
     UtTest_Add(DS_ResetCountersCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_ResetCountersCmd_Test_Nominal");
 
     UtTest_Add(DS_SetAppStateCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetAppStateCmd_Test_Nominal");
-    UtTest_Add(DS_SetAppStateCmd_Test_InvalidAppState, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetAppStateCmd_Test_InvalidAppState,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetAppStateCmd_Test_InvalidAppState");
 
     UtTest_Add(DS_SetFilterFileCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetFilterFileCmd_Test_Nominal");
-    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidMessageID, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidMessageID,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterFileCmd_Test_InvalidMessageID");
-    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidFilterParametersIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidFilterParametersIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterFileCmd_Test_InvalidFilterParametersIndex");
-    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterFileCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterFileCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetFilterFileCmd_Test_FilterTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterFileCmd_Test_FilterTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterFileCmd_Test_FilterTableNotLoaded");
-    UtTest_Add(DS_SetFilterFileCmd_Test_MessageIDNotInFilterTable, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterFileCmd_Test_MessageIDNotInFilterTable,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterFileCmd_Test_MessageIDNotInFilterTable");
 
     UtTest_Add(DS_SetFilterTypeCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetFilterTypeCmd_Test_Nominal");
-    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidMessageID, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidMessageID,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterTypeCmd_Test_InvalidMessageID");
-    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidFilterParametersIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidFilterParametersIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterTypeCmd_Test_InvalidFilterParametersIndex");
-    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidFilterType, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterTypeCmd_Test_InvalidFilterType,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterTypeCmd_Test_InvalidFilterType");
-    UtTest_Add(DS_SetFilterTypeCmd_Test_FilterTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterTypeCmd_Test_FilterTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterTypeCmd_Test_FilterTableNotLoaded");
-    UtTest_Add(DS_SetFilterTypeCmd_Test_MessageIDNotInFilterTable, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterTypeCmd_Test_MessageIDNotInFilterTable,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterTypeCmd_Test_MessageIDNotInFilterTable");
 
     UtTest_Add(DS_SetFilterParmsCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetFilterParmsCmd_Test_Nominal");
-    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidMessageID, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidMessageID,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterParmsCmd_Test_InvalidMessageID");
-    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidFilterParametersIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidFilterParametersIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterParmsCmd_Test_InvalidFilterParametersIndex");
-    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidFilterAlgorithm, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterParmsCmd_Test_InvalidFilterAlgorithm,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterParmsCmd_Test_InvalidFilterAlgorithm");
-    UtTest_Add(DS_SetFilterParmsCmd_Test_FilterTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterParmsCmd_Test_FilterTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterParmsCmd_Test_FilterTableNotLoaded");
-    UtTest_Add(DS_SetFilterParmsCmd_Test_MessageIDNotInFilterTable, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetFilterParmsCmd_Test_MessageIDNotInFilterTable,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetFilterParmsCmd_Test_MessageIDNotInFilterTable");
 
     UtTest_Add(DS_SetDestTypeCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestTypeCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestTypeCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestTypeCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestTypeCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestTypeCmd_Test_InvalidFilenameType, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestTypeCmd_Test_InvalidFilenameType,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestTypeCmd_Test_InvalidFilenameType");
-    UtTest_Add(DS_SetDestTypeCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestTypeCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestTypeCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestStateCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestStateCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestStateCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestStateCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestStateCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestStateCmd_Test_InvalidFileState, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestStateCmd_Test_InvalidFileState,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestStateCmd_Test_InvalidFileState");
-    UtTest_Add(DS_SetDestStateCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestStateCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestStateCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestPathCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestPathCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestPathCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestPathCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestPathCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestPathCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestPathCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestPathCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestBaseCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestBaseCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestBaseCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestBaseCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestBaseCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestBaseCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestBaseCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestBaseCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestExtCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestExtCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestExtCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestExtCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestExtCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestExtCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestExtCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestExtCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestSizeCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestSizeCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestSizeCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestSizeCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestSizeCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestSizeCmd_Test_InvalidFileSizeLimit, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestSizeCmd_Test_InvalidFileSizeLimit,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestSizeCmd_Test_InvalidFileSizeLimit");
-    UtTest_Add(DS_SetDestSizeCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestSizeCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestSizeCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestAgeCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestAgeCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestAgeCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestAgeCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestAgeCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestAgeCmd_Test_InvalidFileAgeLimit, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestAgeCmd_Test_InvalidFileAgeLimit,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestAgeCmd_Test_InvalidFileAgeLimit");
-    UtTest_Add(DS_SetDestAgeCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestAgeCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestAgeCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_SetDestCountCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_SetDestCountCmd_Test_Nominal");
-    UtTest_Add(DS_SetDestCountCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestCountCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestCountCmd_Test_InvalidFileTableIndex");
-    UtTest_Add(DS_SetDestCountCmd_Test_InvalidFileSequenceCount, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestCountCmd_Test_InvalidFileSequenceCount,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestCountCmd_Test_InvalidFileSequenceCount");
-    UtTest_Add(DS_SetDestCountCmd_Test_FileTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_SetDestCountCmd_Test_FileTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_SetDestCountCmd_Test_FileTableNotLoaded");
 
     UtTest_Add(DS_CloseFileCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_CloseFileCmd_Test_Nominal");
-    UtTest_Add(DS_CloseFileCmd_Test_NominalAlreadyClosed, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_CloseFileCmd_Test_NominalAlreadyClosed,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_CloseFileCmd_Test_NominalAlreadyClosed");
-    UtTest_Add(DS_CloseFileCmd_Test_InvalidFileTableIndex, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_CloseFileCmd_Test_InvalidFileTableIndex,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_CloseFileCmd_Test_InvalidFileTableIndex");
 
     UtTest_Add(DS_CloseAllCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_CloseAllCmd_Test_Nominal");
     UtTest_Add(DS_CloseAllCmd_Test_CloseAll, DS_Test_Setup, DS_Test_TearDown, "DS_CloseAllCmd_Test_CloseAll");
 
-    UtTest_Add(DS_GetFileInfoCmd_Test_EnabledOpen, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_GetFileInfoCmd_Test_EnabledOpen,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_GetFileInfoCmd_Test_EnabledOpen");
-    UtTest_Add(DS_GetFileInfoCmd_Test_DisabledClosed, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_GetFileInfoCmd_Test_DisabledClosed,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_GetFileInfoCmd_Test_DisabledClosed");
 
     UtTest_Add(DS_AddMIDCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_AddMIDCmd_Test_Nominal");
-    UtTest_Add(DS_AddMIDCmd_Test_InvalidMessageID, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_AddMIDCmd_Test_InvalidMessageID,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_AddMIDCmd_Test_InvalidMessageID");
-    UtTest_Add(DS_AddMIDCmd_Test_FilterTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_AddMIDCmd_Test_FilterTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_AddMIDCmd_Test_FilterTableNotLoaded");
-    UtTest_Add(DS_AddMIDCmd_Test_MIDAlreadyInFilterTable, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_AddMIDCmd_Test_MIDAlreadyInFilterTable,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_AddMIDCmd_Test_MIDAlreadyInFilterTable");
     UtTest_Add(DS_AddMIDCmd_Test_FilterTableFull, DS_Test_Setup, DS_Test_TearDown, "DS_AddMIDCmd_Test_FilterTableFull");
 
     UtTest_Add(DS_RemoveMIDCmd_Test_Nominal, DS_Test_Setup, DS_Test_TearDown, "DS_RemoveMIDCmd_Test_Nominal");
-    UtTest_Add(DS_RemoveMIDCmd_Test_InvalidMessageID, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_RemoveMIDCmd_Test_InvalidMessageID,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_RemoveMIDCmd_Test_InvalidMessageID");
-    UtTest_Add(DS_RemoveMIDCmd_Test_FilterTableNotLoaded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_RemoveMIDCmd_Test_FilterTableNotLoaded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_RemoveMIDCmd_Test_FilterTableNotLoaded");
-    UtTest_Add(DS_RemoveMIDCmd_Test_MessageIDNotAdded, DS_Test_Setup, DS_Test_TearDown,
+    UtTest_Add(DS_RemoveMIDCmd_Test_MessageIDNotAdded,
+               DS_Test_Setup,
+               DS_Test_TearDown,
                "DS_RemoveMIDCmd_Test_MessageIDNotAdded");
 
     UtTest_Add(DS_AppSendHkCmd_Test, DS_Test_Setup, DS_Test_TearDown, "DS_AppSendHkCmd_Test");
