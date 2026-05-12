@@ -31,7 +31,7 @@
 
 #define DS_MAJOR_VERSION 7 /**< \brief Major version number */
 #define DS_MINOR_VERSION 0 /**< \brief Minor version number */
-#define DS_REVISION      0 /**< \brief Revision number */
+#define DS_REVISION      1 /**< \brief Revision number */
 
 /**\}*/
 
