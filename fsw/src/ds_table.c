@@ -37,6 +37,12 @@
 
 #define DS_CDS_NAME "DS_CDS"
 
+/*
+ * Local Function Prototypes
+ */
+void TableDestFileUpdate(void);
+void TableFilterUpdate(void);
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
 /* DS application table initialization                             */
@@ -281,21 +287,46 @@ void DS_TableManageDestFile(void)
             */
             CFE_TBL_ReleaseAddress(DS_AppData.DestFileTblHandle);
             CFE_TBL_Update(DS_AppData.DestFileTblHandle);
-            CFE_TBL_GetAddress((void *)&DS_AppData.DestFileTblPtr, DS_AppData.DestFileTblHandle);
-            /*
-            ** Keep local copies of table values that software will modify...
-            */
-            for (i = 0; i < DS_DEST_FILE_CNT; i++)
-            {
-                DS_AppData.FileStatus[i].FileState = DS_AppData.DestFileTblPtr->File[i].EnableState;
-                DS_AppData.FileStatus[i].FileCount = DS_AppData.DestFileTblPtr->File[i].SequenceCount;
-            }
-
-            /*
-            ** Store local values in the Critical Data Store (CDS)...
-            */
-            DS_TableUpdateCDS();
+            TableDestFileUpdate();
         }
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                 */
+/* Dest File Table Update Local Function                           */
+/*                                                                 */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void TableDestFileUpdate(void)
+{
+    int32        i = 0;
+    CFE_Status_t Result;
+
+    Result = CFE_TBL_GetAddress((void *)&DS_AppData.DestFileTblPtr, DS_AppData.DestFileTblHandle);
+
+    if (Result >= CFE_SUCCESS)
+    {
+        /*
+        ** Keep local copies of table values that software will modify...
+        */
+        for (i = 0; i < DS_DEST_FILE_CNT; i++)
+        {
+            DS_AppData.FileStatus[i].FileState = DS_AppData.DestFileTblPtr->File[i].EnableState;
+            DS_AppData.FileStatus[i].FileCount = DS_AppData.DestFileTblPtr->File[i].SequenceCount;
+        }
+
+        /*
+        ** Store local values in the Critical Data Store (CDS)...
+        */
+        DS_TableUpdateCDS();
+    }
+    else
+    {
+        CFE_EVS_SendEvent(DS_TBL_GET_ADDR_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Dest File Table Error for CFE_TBL_GetAddress = 0x%08X",
+                          (unsigned int)Result);
     }
 }
 
@@ -389,17 +420,41 @@ void DS_TableManageFilter(void)
             */
             CFE_TBL_ReleaseAddress(DS_AppData.FilterTblHandle);
             CFE_TBL_Update(DS_AppData.FilterTblHandle);
-            CFE_TBL_GetAddress((void *)&DS_AppData.FilterTblPtr, DS_AppData.FilterTblHandle);
-            /*
-            ** Subscribe to the packets in the new filter table...
-            */
-            DS_TableSubscribe();
-
-            /*
-            ** Create hash table for messageID's in new filter table...
-            */
-            DS_TableCreateHash();
+            TableFilterUpdate();
         }
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                 */
+/* Filter Table Update Local Function                           */
+/*                                                                 */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void TableFilterUpdate(void)
+{
+    CFE_Status_t Result;
+
+    Result = CFE_TBL_GetAddress((void *)&DS_AppData.FilterTblPtr, DS_AppData.FilterTblHandle);
+
+    if (Result >= CFE_SUCCESS)
+    {
+        /*
+        ** Subscribe to the packets in the new filter table...
+        */
+        DS_TableSubscribe();
+
+        /*
+        ** Create hash table for messageID's in new filter table...
+        */
+        DS_TableCreateHash();
+    }
+    else
+    {
+        CFE_EVS_SendEvent(DS_TBL_GET_ADDR_ERR_EID,
+                          CFE_EVS_EventType_ERROR,
+                          "Filter Table Error for CFE_TBL_GetAddress = 0x%08X",
+                          (unsigned int)Result);
     }
 }
 

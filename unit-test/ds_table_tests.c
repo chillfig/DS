@@ -244,6 +244,14 @@ void DS_TableManageDestFile_Test_TableInfoUpdatePending(void)
     UtAssert_UINT32_EQ(DS_AppData.FileStatus[DS_DEST_FILE_CNT - 1].FileCount, DS_DEST_FILE_CNT - 1);
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
+
+    /* Execute the function with CFE_TBL_GetAddress() Failing */
+    UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetAddress), -1);
+
+    /* Execute the function being tested */
+    DS_TableManageDestFile();
+
+    UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
 }
 
 void DS_TableManageDestFile_Test_TableSuccess(void)
@@ -345,6 +353,15 @@ void DS_TableManageFilter_Test_TableInfoUpdatePending(void)
     UtAssert_UINT32_EQ(DS_AppData.FilterTblLoadCounter, 1);
 
     UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 0);
+
+    /* If CFE_TBL_GetAddress() fails */
+    /* Execute the function with CFE_TBL_GetAddress() Failing */
+    UT_SetDefaultReturnValue(UT_KEY(CFE_TBL_GetAddress), -1);
+
+    /* Execute the function being tested */
+    DS_TableManageFilter();
+
+    UtAssert_STUB_COUNT(CFE_EVS_SendEvent, 1);
 }
 
 void DS_TableManageFilter_Test_TableSuccess(void)
