@@ -698,6 +698,8 @@ void DS_FileCreateSequence(char *Buffer, uint32 Type, uint32 Count)
     }
     else if (Type == DS_BY_TIME)
     {
+        memset(Buffer, 0, CFE_TIME_PRINTED_STRING_SIZE);
+
         /*
         ** Filename is based on seconds from current time...
         */
