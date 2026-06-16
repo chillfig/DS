@@ -619,12 +619,10 @@ void DS_FileCreateName(uint32 FileIndex)
         }
 
         /* Confirm working name fits */
-        if (strlen(Workname) < DS_TOTAL_FNAME_BUFSIZE)
+        if (strlen(Workname) < sizeof(FileStatus->FileName))
         {
-            /* Success - copy workname to filename buffer */
-            strncpy(FileStatus->FileName, Workname, sizeof(FileStatus->FileName) - 1);
-            /* Make sure a null terminator is added to the strncpy destination */
-            FileStatus->FileName[sizeof(FileStatus->FileName) - 1] = '\0';
+            /* note: strcpy is OK because bounds checking was performed above. */
+            strcpy(FileStatus->FileName, Workname);
         }
         else
         {
