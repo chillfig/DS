@@ -621,7 +621,6 @@ void DS_FileCreateName(uint32 FileIndex)
         /* Confirm working name fits */
         if (strlen(Workname) < sizeof(FileStatus->FileName))
         {
-            /* SAD: Ignore CodeSonar - strcpy ok as bounds checking was performed above */
             strcpy(FileStatus->FileName, Workname);
         }
         else
