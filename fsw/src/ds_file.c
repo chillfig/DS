@@ -619,9 +619,8 @@ void DS_FileCreateName(uint32 FileIndex)
         }
 
         /* Confirm working name fits */
-        if (strlen(Workname) < DS_TOTAL_FNAME_BUFSIZE)
+        if (strlen(Workname) < sizeof(FileStatus->FileName))
         {
-            /* Success - copy workname to filename buffer */
             strcpy(FileStatus->FileName, Workname);
         }
         else
