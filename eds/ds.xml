@@ -37,9 +37,9 @@
           <Entry type="BASE_TYPES/uint8" name="CmdAcceptedCounter" shortDescription="Count of valid commands received" />
           <Entry type="BASE_TYPES/uint8" name="CmdRejectedCounter" shortDescription="Count of invalid commands received" />
           <Entry type="BASE_TYPES/uint8" name="DestTblLoadCounter" shortDescription="Count of destination file table loads" />
-          <Entry type="BASE_TYPES/uint8" name="DestTblErrCounter" shortDescription="Count of failed attempts to get table data pointer" />
+          <Entry type="BASE_TYPES/uint8" name="DestTblErrCounter" shortDescription="Count of failed attempts to get destination table data pointer" />
           <Entry type="BASE_TYPES/uint8" name="FilterTblLoadCounter" shortDescription="Count of packet filter table loads" />
-          <Entry type="BASE_TYPES/uint8" name="FilterTblErrCounter" shortDescription="Count of failed attempts to get table data pointer" />
+          <Entry type="BASE_TYPES/uint8" name="FilterTblErrCounter" shortDescription="Count of failed attempts to get filter table data pointer" />
           <Entry type="BASE_TYPES/uint8" name="AppEnableState" shortDescription="Application enable/disable state" />
           <PaddingEntry sizeInBits="8" />
           <Entry type="BASE_TYPES/uint16" name="FileWriteCounter" shortDescription="Count of good destination file writes" />
